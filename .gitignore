@@ -1,7 +1,17 @@
-.git/
-.vscode/
-build/
+# Бинарные файлы
+*.o
+*.exe
+*.out
 
-.gitignore
-build.cmd
-main.exe
+# Сборка
+/build/
+/main
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Vitmalok-specific
+/.git/
+/.vscode/
+/build.cmd
