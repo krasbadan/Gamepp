@@ -1,0 +1,19 @@
+#pragma once
+#include "Utils.hpp"
+#include "Player.hpp"
+#include "TextureManager.hpp"
+
+class World: public sf::Drawable {
+	static const int road_width = 8;
+public:
+	Player player;
+	int width, height;
+	Tile** tiles;
+	
+	World(int _width, int _height);
+	
+	virtual void update();
+
+private:
+	virtual void draw(sf::RenderTarget& target, [[maybe_unused]] sf::RenderStates states) const override;
+};
