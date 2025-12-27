@@ -2,6 +2,7 @@
 #include "Utils.hpp"
 #include "Player.hpp"
 #include "TextureManager.hpp"
+#include "Tile.hpp"
 
 class World: public sf::Drawable {
 	static const int road_width = 8;
@@ -12,7 +13,7 @@ public:
 	
 	World(int _width, int _height);
 	
-	virtual void update();
+	void update(float deltaTime);
 
 private:
 	virtual void draw(sf::RenderTarget& target, [[maybe_unused]] sf::RenderStates states) const override;

@@ -5,7 +5,8 @@ class Character : public sf::Drawable, public sf::Transformable {
 protected:
     World* worldptr;
     sf::Sprite sprite;
-    float speed = 200.0f;
+    float speed = 2.0f;
+	float ingame_height = 1.8f;
     int hp_max, hp;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

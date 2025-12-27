@@ -5,38 +5,59 @@
 #include "TextureManager.hpp"
 #include "Utils.hpp"
 
-#include "MapObject.hpp"
 #include "Player.hpp"
-#include "Tile.hpp"
 #include "World.hpp"
+
+
 
 TextureManager Tx;
 
-int main() {
-    sf::RenderWindow window(sf::VideoMode({1080, 720}), "SFML 3 Character");
-    int zoomout = 2;
-    sf::View view(sf::FloatRect({0.f, 0.f}, {zoomout*144.f, zoomout*96.f}));
 
+
+void update_view_size(const sf::RenderWindow& window, sf::View& view, const float& zoomout) {
+    view.setSize(sf::Vector2f(window.getSize())*zoomout);
+};
+
+
+
+int main() {
+    sf::RenderWindow window(sf::VideoMode({1080, 720}), "Game++");
+    sf::Clock clock;
+    
+    float zoomout = 0.015;
+    sf::View view(sf::FloatRect({0.f, 0.f}, sf::Vector2f(window.getSize())*zoomout));
+    
+    
+    
+    const auto onClosed = [&window](const sf::Event::Closed& event) {
+        window.close();
+    };
+    const auto onResized = [&window, &view, &zoomout](const sf::Event::Resized& event) {
+        update_view_size(window, view, zoomout);
+    };
+    const auto onMouseWheelScrolled = [&window, &view, &zoomout](const sf::Event::MouseWheelScrolled& event) {
+        zoomout *= pow(1.1, -event.delta);
+        update_view_size(window, view, zoomout);
+    };
+    const auto onKeyPressed = [&window](const sf::Event::KeyPressed& event) {
+        if (event.scancode == sf::Keyboard::Scancode::Escape)
+            window.close();
+    };
+    
+    
+    
     World world(50, 50);
 
-
-    sf::Clock clock;
-
     while (window.isOpen()) {
-        while (const std::optional event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>()) 
-                window.close();
-            else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
-                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) window.close();
-        }
+        window.handleEvents(onClosed, onResized, onMouseWheelScrolled, onKeyPressed);
+        
         float deltaTime = clock.restart().asSeconds();
-        world.player.update(deltaTime);
+        world.update(deltaTime);
         
         window.clear(sf::Color {0, 100, 20});
         view.setCenter(world.player.get_central_point());
         window.setView(view);
         window.draw(world);
-        window.draw(world.player);
         window.display();
     }
 

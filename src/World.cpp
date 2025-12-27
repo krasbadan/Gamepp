@@ -1,5 +1,6 @@
+#include <iostream>
+
 #include "World.hpp"
-#include "Tile.hpp"
 
 World::World(int _width, int _height):
     player(this, Tx["Assets/player.png"]),
@@ -25,15 +26,16 @@ World::World(int _width, int _height):
     }
 }
 
-void World::update() {
-    
+void World::update(float deltaTime) {
+    player.update(deltaTime);
 }
 
 void World::draw(sf::RenderTarget& target, [[maybe_unused]] sf::RenderStates states) const {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++){
-            tiles[y][x].sprite.setPosition({static_cast<float>(x*TILESIZE), static_cast<float>(y*TILESIZE)});
+            tiles[y][x].sprite.setPosition({static_cast<float>(x), static_cast<float>(y)});
             target.draw(tiles[y][x].sprite);
         }
     }
+	target.draw(player);
 }
