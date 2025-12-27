@@ -1,12 +1,7 @@
-# Бинарные файлы
-*.o
-*.exe
-*.out
+.git/
+.vscode/
+build/
 
-# Папки сборки
-/build/
-/main
-
-# Системные файлы
-.DS_Store
-Thumbs.db
+.gitignore
+build.cmd
+main.exe
