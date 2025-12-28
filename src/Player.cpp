@@ -20,6 +20,8 @@ void Player::update(float deltaTime) {
     std::cout << "Logic: " << logicPos.x << ", " << logicPos.y << std::endl;
     std::cout << "Iso (Screen): " << isoPos.x << ", " << isoPos.y << std::endl;
     //*/
+
+    //std::cout << sprite.getGlobalBounds().getCenter().x << " " << sprite.getGlobalBounds().getCenter().y << std::endl;
     
     if (can_move(getPosition() + movement)) {
         move(movement);
