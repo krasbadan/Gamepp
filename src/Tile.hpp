@@ -22,13 +22,13 @@ const int n_tile_types = 7;
 */
 
 const TileType tile_types[n_tile_types] = {
-	{"Assets/Tiles/void.png", false},
+	{"Assets/Tiles/default_block.png", true},
 	{"Assets/Tiles/grass.png", true},
 	{"Assets/Tiles/dirt.png", true},
 	{"Assets/Tiles/road.png", true},
 	{"Assets/Tiles/sand.png", true},
 	{"Assets/Tiles/cliff.png", false},
-	{"Assets/Tiles/water.png", true}
+	{"Assets/Tiles/water.png", true},
 };
 
 struct Tile {
@@ -38,7 +38,7 @@ struct Tile {
 	MapObject* map_object;
 	sf::Sprite sprite;
 
-    Tile(World* _worldptr, int _type, bool _is_passable, MapObject* _map_object);
-    Tile(World* _worldptr, int _type);
-    Tile();
+    Tile(World* _worldptr, int _type, bool _is_passable, MapObject* _map_obj = nullptr);
+    Tile(World* _worldptr, int _type) : Tile(_worldptr, _type, tile_types[_type].is_passable) {}
+    Tile() : Tile(nullptr, 0, false) {}
 };

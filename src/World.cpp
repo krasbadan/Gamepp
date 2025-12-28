@@ -5,6 +5,7 @@
 
 #include "TextureManager.hpp"
 #include "Tile.hpp"
+#include "MapObject.hpp"
 
 
 
@@ -26,7 +27,7 @@ World::World(int _width, int _height):
             else if (abs(y - road_y) < road_width/2) {
                 tiles[y][x] = Tile(this, (x*x*17+x*5+y*29+x*y)%7+0);
             } else {
-                tiles[y][x] = Tile(this, 1);
+                tiles[y][x] = Tile(this, 0);
             }
         }
     }
@@ -78,6 +79,20 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     
     playerStates.transform.translate(playerIsoPos);
     playerStates.transform.translate(-playerLogicPos);
+
+    for (int y = start_y; y < end_y; y++) {
+        for (int x = start_x; x < end_x; x++) {
+            if (tiles[y][x].map_object) {
+                MapObject* obj = tiles[y][x].map_object;
+                sf::Vector2f logicPos = {(float)x, (float)y};
+                sf::Vector2f isoPos = isoMatrix.transformPoint(logicPos);
+                sf::RenderStates objStates = states;
+                objStates.transform.translate(isoPos);
+
+                target.draw(*obj, objStates);
+            }
+        }
+    }
 
     target.draw(player, playerStates);
 }

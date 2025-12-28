@@ -4,30 +4,12 @@
 
 
 
-Tile::Tile(World* _worldptr, int _type, bool _is_passable, MapObject* _map_object):
-    worldptr(_worldptr),
-    type(_type),
-    is_passable(_is_passable),
-    map_object(_map_object),
-    sprite(Tx[tile_types[_type].texture_filename])
+Tile::Tile(World* _worldptr, int _type, bool _is_passable, MapObject* _map_obj) :
+    worldptr(_worldptr), 
+    type(_type), 
+    is_passable(_is_passable), 
+    map_object(_map_obj),
+    sprite(Tx[tile_types[_type].texture_filename]) 
 {
-	sprite.setScale(sf::Vector2f(1.f/16.f, 1.f/16.f));
-}
-Tile::Tile(World* _worldptr, int _type):
-    worldptr(_worldptr),
-    type(_type),
-    is_passable(tile_types[_type].is_passable),
-    map_object(nullptr),
-    sprite(Tx[tile_types[_type].texture_filename])
-{
-	sprite.setScale(sf::Vector2f(1.f/16.f, 1.f/16.f));
-}
-Tile::Tile():
-    worldptr(nullptr),
-    type(0),
-    is_passable(false),
-    map_object(nullptr),
-    sprite(Tx[tile_types[0].texture_filename])
-{
-	sprite.setScale(sf::Vector2f(1.f/16.f, 1.f/16.f));
+    sprite.setScale({1.f/16.f, 1.f/16.f});
 }

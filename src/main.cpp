@@ -7,7 +7,7 @@
 
 #include "Player.hpp"
 #include "World.hpp"
-
+#include "MapObject.hpp"
 
 
 TextureManager Tx;
@@ -56,6 +56,10 @@ int main() {
     
     
     World world(50, 50);
+    MapObject tree1(&world, Tx["Assets/MapObjects/birch.png"], {4, 10}, 8);
+    MapObject tree2(&world, Tx["Assets/MapObjects/birch.png"], {7, 13}, 8);
+    MapObject tree3(&world, Tx["Assets/MapObjects/birch.png"], {10, 14}, 8);
+    MapObject tree4(&world, Tx["Assets/MapObjects/birch.png"], {4, 15}, 8);
 
     while (window.isOpen()) {
         window.handleEvents(onClosed, onKeyPressed, onFocusLost, onFocusGained, onResized, onMouseWheelScrolled);
