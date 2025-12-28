@@ -1,7 +1,5 @@
-# Бинарные файлы
-*.o
-*.exe
-*.out
+# Конфигурация IDE
+/.vscode/
 
 # Сборка
 /build/
@@ -11,7 +9,6 @@
 .DS_Store
 Thumbs.db
 
-# Vitmalok-specific
-/.git/
-/.vscode/
-/build.cmd
+# Платформозависимые настройки
+SFML_include_dir.txt
+SFML_link_files.txt
