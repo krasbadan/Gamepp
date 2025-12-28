@@ -53,7 +53,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     sf::RenderStates tileStates = states;
     tileStates.transform *= isoMatrix;
 
-    sf::Vector2f pPos = player.getPosition();
+    sf::Vector2f pPos = player.get_central_point();
     
     int size_x = target.getView().getSize().x, size_y = target.getView().getSize().y, min_r = 4;
     int radius = std::max({size_x/2, size_y/2, min_r});
