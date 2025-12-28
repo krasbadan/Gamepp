@@ -7,6 +7,7 @@
 
 
 const int TILESIZE = 16;
+const float ISO_SCALE_Y = 0.707;
 
 class TextureManager; class Tile; class MapObject; class World; class Character; class Player;
 

@@ -10,13 +10,13 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(sprite, states);
 }
 
-sf::Vector2f Character::get_bottom_point() {
+sf::Vector2f Character::get_bottom_point() const {
     sf::Vector2f bottom = get_central_point();
 	bottom.y *= 2;
     return bottom;
 }
 
-sf::Vector2f Character::get_central_point() {return getPosition()+sprite.getGlobalBounds().getCenter();}
+sf::Vector2f Character::get_central_point() const {return getPosition()+sprite.getGlobalBounds().getCenter();}
 
 Character::Character(World* _worldptr, const sf::Texture& texture, int _hp_max): worldptr(_worldptr), sprite(texture), hp_max(_hp_max), hp(_hp_max) {
     sprite.setOrigin(get_bottom_point());

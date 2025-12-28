@@ -36,20 +36,36 @@ void World::update(float deltaTime) {
     player.update(deltaTime);
 }
 
-void World::draw(sf::RenderTarget& target, [[maybe_unused]] sf::RenderStates states) const {
-    sf::Vector2f center = target.getView().getCenter();
-    sf::Vector2f size = target.getView().getSize();
-    int top_y = floor(center.y - 0.5*size.y);
-    int bottom_y = ceil(center.y + 0.5*size.y);
-    int left_x = floor(center.x - 0.5*size.x);
-    int right_x = ceil(center.x + 0.5*size.x);
+sf::Vector2f World::get_iso_pos(sf::Vector2f logicPos) {
+    sf::Transform isoMatrix;
+    isoMatrix.scale({1.0f, ISO_SCALE_Y}); 
+    isoMatrix.rotate(sf::degrees(45.0f));
     
-    for (int y = std::max(0, top_y); y < std::min(height, bottom_y); y++) {
-        for (int x = std::max(0, left_x); x < std::min(width, right_x); x++){
-            tiles[y][x].sprite.setPosition({static_cast<float>(x), static_cast<float>(y)});
-            target.draw(tiles[y][x].sprite);
+    return isoMatrix.transformPoint(logicPos);
+}
+
+
+void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    sf::Transform isoMatrix;
+    isoMatrix.scale({1.0f, ISO_SCALE_Y}); 
+    isoMatrix.rotate(sf::degrees(45.0f));
+
+    sf::RenderStates tileStates = states;
+    tileStates.transform *= isoMatrix;
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++){
+            tiles[y][x].sprite.setPosition({(float)x, (float)y});
+            target.draw(tiles[y][x].sprite, tileStates);
         }
     }
+
+    sf::Vector2f playerLogicPos = player.getPosition();
+    sf::Vector2f playerIsoPos = isoMatrix.transformPoint(playerLogicPos);
+
+    sf::RenderStates playerStates = states;
     
-	target.draw(player);
+    playerStates.transform.translate(playerIsoPos);
+    playerStates.transform.translate(-playerLogicPos);
+
+    target.draw(player, playerStates);
 }

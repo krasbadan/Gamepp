@@ -6,7 +6,7 @@
 
 
 class Player : public Character {
-    float speed = 4.0f;
+    float speed = 6.0f;
 	float ingame_height = 2.25f;
 public:
     virtual void update(float deltaTime) override;

@@ -16,6 +16,8 @@ public:
 	
 	void update(float deltaTime);
 
+	static sf::Vector2f get_iso_pos(sf::Vector2f logicPos);
+
 private:
 	virtual void draw(sf::RenderTarget& target, [[maybe_unused]] sf::RenderStates states) const override;
 };

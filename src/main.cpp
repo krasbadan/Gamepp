@@ -1,12 +1,12 @@
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
 
-#include <SFML/Graphics.hpp>
+#include "TextureManager.hpp"
+#include "Utils.hpp"
 
 #include "Player.hpp"
-#include "TextureManager.hpp"
 #include "World.hpp"
-#include "Utils.hpp"
 
 
 
@@ -35,15 +35,15 @@ int main() {
     const auto onClosed = [&window](const sf::Event::Closed& event) {
         window.close();
     };
+    const auto onKeyPressed = [&window](const sf::Event::KeyPressed& event) {
+        if (event.scancode == sf::Keyboard::Scancode::Escape)
+            window.close();
+    };
     const auto onFocusLost = [&window_focus](const sf::Event::FocusLost& event) {
         window_focus = false;
     };
     const auto onFocusGained = [&window_focus](const sf::Event::FocusGained& event) {
         window_focus = true;
-    };
-    const auto onKeyPressed = [&window](const sf::Event::KeyPressed& event) {
-        if (event.scancode == sf::Keyboard::Scancode::Escape)
-            window.close();
     };
     const auto onResized = [&window, &view, &zoomout](const sf::Event::Resized& event) {
         update_view_size(window, view, zoomout);
@@ -58,14 +58,14 @@ int main() {
     World world(50, 50);
 
     while (window.isOpen()) {
-        window.handleEvents(onClosed, onFocusLost, onFocusGained, onKeyPressed, onResized, onMouseWheelScrolled);
+        window.handleEvents(onClosed, onKeyPressed, onFocusLost, onFocusGained, onResized, onMouseWheelScrolled);
         
         float deltaTime = clock.restart().asSeconds();
         world.update(deltaTime);
         
         if (window_focus) {
             window.clear(sf::Color {0, 100, 20});
-            view.setCenter(world.player.get_central_point());
+            view.setCenter(World::get_iso_pos(world.player.getPosition()));
             window.setView(view);
             window.draw(world);
         }

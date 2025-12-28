@@ -7,17 +7,17 @@
 class Character : public sf::Drawable, public sf::Transformable {
 protected:
     World* worldptr;
-    sf::Sprite sprite;
-    float speed = 2.0f;
+    float speed = 4.0f;
 	float ingame_height = 1.8f;
     int hp_max, hp;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    sf::Vector2f get_bottom_point();
+    sf::Vector2f get_bottom_point() const;
 
 public:
-    sf::Vector2f get_central_point();
+sf::Sprite sprite;
+    sf::Vector2f get_central_point() const;
 
     Character(World* _worldptr, const sf::Texture& texture, int _hp_max = 100);
 
