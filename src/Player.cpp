@@ -1,6 +1,6 @@
 #include "Player.hpp"
-#include "World.hpp"
-#include "Tile.hpp"
+
+
 
 Player::Player(World* _worldptr, const sf::Texture& texture, int _hp_max) : Character(_worldptr, texture, _hp_max) {}
 

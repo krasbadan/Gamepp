@@ -10,5 +10,5 @@
 Thumbs.db
 
 # Платформозависимые настройки
-SFML_include_dir.txt
-SFML_link_files.txt
+/SFML_include_dir.txt
+/SFML_link_files.txt

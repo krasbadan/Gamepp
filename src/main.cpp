@@ -1,12 +1,12 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
 
-#include "TextureManager.hpp"
-#include "Utils.hpp"
+#include <SFML/Graphics.hpp>
 
 #include "Player.hpp"
+#include "TextureManager.hpp"
 #include "World.hpp"
+#include "Utils.hpp"
 
 
 

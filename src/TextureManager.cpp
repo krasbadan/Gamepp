@@ -1,5 +1,7 @@
 #include "TextureManager.hpp"
 
+
+
 const sf::Texture& TextureManager::operator[](const std::string& filename) {
     std::map<std::string, sf::Texture>::iterator T = textures.find(filename);
     if (T == textures.end()) {

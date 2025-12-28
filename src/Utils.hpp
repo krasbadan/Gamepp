@@ -1,6 +1,11 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+
 #include <cmath>
+
+#include <SFML/Graphics.hpp>
+
+
+
 const int TILESIZE = 16;
 
 class TextureManager; class Tile; class MapObject; class World; class Character; class Player;

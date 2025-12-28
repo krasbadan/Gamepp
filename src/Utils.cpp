@@ -1,5 +1,7 @@
 #include "Utils.hpp"
 
+
+
 sf::Vector2f operator*(sf::Vector2f vec, float c){
     vec.x *= c; vec.y *= c;
     return vec;

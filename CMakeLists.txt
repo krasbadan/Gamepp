@@ -14,8 +14,10 @@ add_executable(main)
 target_sources(main
   PRIVATE
     "src/main.cpp"
+    
     "src/Character.cpp"
     "src/MapObject.cpp"
+    "src/NPC.cpp"
     "src/Player.cpp"
     "src/Tile.cpp"
     "src/TextureManager.cpp"

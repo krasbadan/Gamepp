@@ -1,7 +1,12 @@
-#include <iostream>
-#include <algorithm>
-
 #include "World.hpp"
+
+#include <algorithm>
+#include <iostream>
+
+#include "TextureManager.hpp"
+#include "Tile.hpp"
+
+
 
 World::World(int _width, int _height):
     player(this, Tx["Assets/player.png"]),

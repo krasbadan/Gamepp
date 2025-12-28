@@ -1,8 +1,9 @@
 #pragma once
-#include "Utils.hpp"
+
 #include "Player.hpp"
-#include "TextureManager.hpp"
-#include "Tile.hpp"
+#include "Utils.hpp"
+
+
 
 class World: public sf::Drawable {
 	static const int road_width = 8;
