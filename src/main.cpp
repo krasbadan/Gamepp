@@ -32,6 +32,10 @@ int main() {
     const auto onClosed = [&window](const sf::Event::Closed& event) {
         window.close();
     };
+    const auto onKeyPressed = [&window](const sf::Event::KeyPressed& event) {
+        if (event.scancode == sf::Keyboard::Scancode::Escape)
+            window.close();
+    };
     const auto onResized = [&window, &view, &zoomout](const sf::Event::Resized& event) {
         update_view_size(window, view, zoomout);
     };
@@ -39,17 +43,13 @@ int main() {
         zoomout *= pow(1.1, -event.delta);
         update_view_size(window, view, zoomout);
     };
-    const auto onKeyPressed = [&window](const sf::Event::KeyPressed& event) {
-        if (event.scancode == sf::Keyboard::Scancode::Escape)
-            window.close();
-    };
     
     
     
     World world(50, 50);
 
     while (window.isOpen()) {
-        window.handleEvents(onClosed, onResized, onMouseWheelScrolled, onKeyPressed);
+        window.handleEvents(onClosed, onKeyPressed, onResized, onMouseWheelScrolled);
         
         float deltaTime = clock.restart().asSeconds();
         world.update(deltaTime);
