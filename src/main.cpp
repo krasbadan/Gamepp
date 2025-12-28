@@ -24,6 +24,9 @@ int main() {
     sf::RenderWindow window(sf::VideoMode({1080, 720}), "Game++");
     sf::Clock clock;
     
+    window.setFramerateLimit(60);
+    
+    bool window_focus = true;
     float zoomout = 0.015;
     sf::View view(sf::FloatRect({0.f, 0.f}, sf::Vector2f(window.getSize())*zoomout));
     
@@ -31,6 +34,12 @@ int main() {
     
     const auto onClosed = [&window](const sf::Event::Closed& event) {
         window.close();
+    };
+    const auto onFocusLost = [&window_focus](const sf::Event::FocusLost& event) {
+        window_focus = false;
+    };
+    const auto onFocusGained = [&window_focus](const sf::Event::FocusGained& event) {
+        window_focus = true;
     };
     const auto onResized = [&window, &view, &zoomout](const sf::Event::Resized& event) {
         update_view_size(window, view, zoomout);
@@ -49,15 +58,17 @@ int main() {
     World world(50, 50);
 
     while (window.isOpen()) {
-        window.handleEvents(onClosed, onResized, onMouseWheelScrolled, onKeyPressed);
+        window.handleEvents(onClosed, onFocusLost, onFocusGained, onResized, onMouseWheelScrolled, onKeyPressed);
         
         float deltaTime = clock.restart().asSeconds();
         world.update(deltaTime);
         
-        window.clear(sf::Color {0, 100, 20});
-        view.setCenter(world.player.get_central_point());
-        window.setView(view);
-        window.draw(world);
+        if (window_focus) {
+            window.clear(sf::Color {0, 100, 20});
+            view.setCenter(world.player.get_central_point());
+            window.setView(view);
+            window.draw(world);
+        }
         window.display();
     }
 
