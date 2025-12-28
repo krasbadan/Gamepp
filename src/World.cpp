@@ -24,7 +24,7 @@ World::World(int _width, int _height):
                 tiles[y][x] = Tile(this, 5);
             }
             else if (abs(y - road_y) < road_width/2) {
-                tiles[y][x] = Tile(this, (x*x*17+x*5+y*29+x*y)%1+6);
+                tiles[y][x] = Tile(this, (x*x*17+x*5+y*29+x*y)%7+0);
             } else {
                 tiles[y][x] = Tile(this, 1);
             }
@@ -52,8 +52,20 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
     sf::RenderStates tileStates = states;
     tileStates.transform *= isoMatrix;
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++){
+
+    sf::Vector2f pPos = player.getPosition();
+    
+    int size_x = target.getView().getSize().x, size_y = target.getView().getSize().y, min_r = 4;
+    int radius = std::max({size_x/2, size_y/2, min_r});
+    float margin = 1.5; // > sqrt(2);
+
+    int start_x = std::max(0, (int)floor(pPos.x - radius * margin));
+    int end_x = std::min(width, (int)ceil(pPos.x + radius * margin));
+    int start_y = std::max(0, (int)floor(pPos.y - radius * margin));
+    int end_y = std::min(height, (int)ceil(pPos.y + radius * margin));
+
+    for (int y = start_y; y < end_y; y++) {
+        for (int x = start_x; x < end_x; x++) {
             tiles[y][x].sprite.setPosition({(float)x, (float)y});
             target.draw(tiles[y][x].sprite, tileStates);
         }
