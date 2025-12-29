@@ -1,3 +1,6 @@
+#pragma once
+
+#include <functional>
 #include <stdexcept>
 
 
@@ -134,5 +137,9 @@ public:
                 }
             }
         }
+    }
+    
+    void sort(std::function<bool(const T& a, const T&b)> __comp) {
+        std::sort(arr, arr+size, __comp);
     }
 };

@@ -6,6 +6,8 @@
 
 
 
+const float EPS = 1e-9;
+
 const int TILESIZE = 16;
 const float ISO_SCALE_Y = 0.707;
 

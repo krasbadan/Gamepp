@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include "sequence.hpp"
+
 #include "TextureManager.hpp"
 #include "Tile.hpp"
 #include "MapObject.hpp"
@@ -69,6 +71,13 @@ sf::Vector2f World::get_iso_pos(sf::Vector2f logicPos) {
 }
 
 
+
+struct CurrentDrawable {
+    const sf::Drawable* drawable;
+    sf::RenderStates states;
+    float z;
+};
+
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     sf::Transform isoMatrix;
     isoMatrix.scale({1.0f, ISO_SCALE_Y}); 
@@ -89,11 +98,23 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     int end_x = std::min(width, (int)ceil(pPos.x + radius * margin));
     int start_y = std::max(0, (int)floor(pPos.y - radius * margin));
     int end_y = std::min(height, (int)ceil(pPos.y + radius * margin));
-
+    
+    Sequence<CurrentDrawable> draw_order;
+    
     for (int y = start_y; y < end_y; y++) {
         for (int x = start_x; x < end_x; x++) {
             tiles[y][x].sprite.setPosition({(float)x, (float)y});
             target.draw(tiles[y][x].sprite, tileStates);
+            
+            if (tiles[y][x].map_object != nullptr) {
+                MapObject* obj = tiles[y][x].map_object;
+                sf::Vector2f logicPos = {(float)x, (float)y};
+                sf::Vector2f isoPos = isoMatrix.transformPoint(logicPos);
+                sf::RenderStates objStates = states;
+                objStates.transform.translate(isoPos);
+
+                draw_order.push_back({obj, objStates, (float)(x+y)+1});
+            }
         }
     }
 
@@ -105,19 +126,11 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     playerStates.transform.translate(playerIsoPos);
     playerStates.transform.translate(-playerLogicPos);
     
-    for (int y = start_y; y < end_y; y++) {
-        for (int x = start_x; x < end_x; x++) {
-            if (tiles[y][x].map_object != nullptr) {
-                MapObject* obj = tiles[y][x].map_object;
-                sf::Vector2f logicPos = {(float)x, (float)y};
-                sf::Vector2f isoPos = isoMatrix.transformPoint(logicPos);
-                sf::RenderStates objStates = states;
-                objStates.transform.translate(isoPos);
-
-                target.draw(*obj, objStates);
-            }
-        }
-    }
+    draw_order.push_back({&player, playerStates, playerLogicPos.x + playerLogicPos.y});
     
-    target.draw(player, playerStates);
+    draw_order.sort([](const CurrentDrawable& a, const CurrentDrawable& b) -> bool {return a.z < b.z;});
+    
+    for (CurrentDrawable& a : draw_order) {
+        target.draw(*a.drawable, a.states);
+    }
 }
