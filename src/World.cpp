@@ -11,7 +11,8 @@
 
 World::World(int _width, int _height):
     player(this, Tx["Assets/Sprites/player.png"]),
-    width(_width), height(_height)
+    width(_width), height(_height),
+    map_objects()
 {
     tiles = new Tile*[height];
     const int road_y = height/2;
@@ -31,6 +32,17 @@ World::World(int _width, int _height):
             }
         }
     }
+    
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 10}, 8));
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {7, 13}, 8));
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {10, 14}, 8));
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 15}, 8));
+    
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 15}, 8));
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {17, 15}, 3));
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 14}, 3));
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {19, 15}, 3));
+    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 16}, 3));
 }
 
 void World::update(float deltaTime) {
@@ -81,7 +93,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     
     playerStates.transform.translate(playerIsoPos);
     playerStates.transform.translate(-playerLogicPos);
-
+    
     for (int y = start_y; y < end_y; y++) {
         for (int x = start_x; x < end_x; x++) {
             if (tiles[y][x].map_object != nullptr) {
@@ -95,6 +107,6 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             }
         }
     }
-
+    
     target.draw(player, playerStates);
 }

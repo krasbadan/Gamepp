@@ -28,6 +28,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode({1080, 720}), "Game++");
     sf::Clock clock;
     
+    window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
     
     bool window_focus = true;
@@ -37,10 +38,6 @@ int main() {
     
     
     World world(50, 50);
-    MapObject tree1(&world, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 10}, 8);
-    MapObject tree2(&world, Tx["Assets/Sprites/MapObjects/birch.png"], {7, 13}, 8);
-    MapObject tree3(&world, Tx["Assets/Sprites/MapObjects/birch.png"], {10, 14}, 8);
-    MapObject tree4(&world, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 15}, 8);
     
     
     

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sequence.hpp"
+
 #include "Player.hpp"
 #include "Utils.hpp"
 
@@ -11,6 +13,7 @@ public:
 	Player player;
 	int width, height;
 	Tile** tiles;
+    Sequence<MapObject*> map_objects;
 	
 	World(int _width, int _height);
 	

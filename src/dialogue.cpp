@@ -105,7 +105,7 @@ int Dialogue::get_active_option() const {
 }
 void Dialogue::set_active_option(int index) {
     if (index < 0 || index >= n_options)
-        throw DialogueError("New active option must be in [0, n_options)");
+        throw DialogueError("New active option index must be in range [0, n_options)");
     options[active_option].is_active = false;
     active_option = index;
     options[active_option].is_active = true;
