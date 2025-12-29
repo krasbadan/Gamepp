@@ -13,7 +13,16 @@ public:
     
     MapResource(World* _worldptr, const sf::Texture& texture, sf::Vector2i pos, const char* _name, int _amount, float ingame_height = 2.f);
     
-    virtual Dialogue* interact() override;
     virtual sf::Vector2f get_interact_pos() const override;
     virtual float get_interact_distance() const override;
+};
+
+
+
+class BirchTree: public MapResource {
+public:
+    BirchTree(World* _worldptr, sf::Vector2i pos, const char* _name, int _amount, float ingame_height = 2.f);
+    
+    virtual Dialogue* interact() override;
+    Dialogue* next_dial();
 };

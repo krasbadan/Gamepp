@@ -37,7 +37,7 @@ int main() {
     
     
     
-    World world(50, 50);
+    World world(500, 500);
     
     
     

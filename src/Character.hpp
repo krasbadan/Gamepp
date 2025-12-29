@@ -19,7 +19,7 @@ protected:
 public:
     sf::Vector2f get_central_point() const;
 
-    Character(World* _worldptr, const sf::Texture& texture, float _ingame_height, int _hp_max = 100);
+    Character(World* _worldptr, const sf::Texture& texture, sf::Vector2f pos, float _ingame_height, int _hp_max = 100);
 
     bool can_move(sf::Vector2f vec);
 

@@ -11,7 +11,7 @@ class Player : public Character {
 public:
     Dialogue* active_dialogue;
     
-    Player(World* _worldptr, const sf::Texture& texture, float _ingame_height = 2.25f, int _hp_max = 100);
+    Player(World* _worldptr, const sf::Texture& texture, sf::Vector2f pos, float _ingame_height = 2.25f, int _hp_max = 100);
     
     virtual void update(float deltaTime) override;
 };

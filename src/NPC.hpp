@@ -9,7 +9,7 @@
 class NPC : public Character, public Interactable {
     float speed = 4.0f;
 public:
-    NPC(World* _worldptr, const sf::Texture& texture, float _ingame_height = 1.8f, int _hp_max = 100);
+    NPC(World* _worldptr, const sf::Texture& texture, sf::Vector2f pos, float _ingame_height = 1.8f, int _hp_max = 100);
     
     virtual void update(float deltaTime) override;
     

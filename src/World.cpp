@@ -107,39 +107,44 @@ sf::Vector2f World::get_iso_pos(sf::Vector2f logicPos) {
 }
 
 World::World(int _width, int _height):
-    player(this, Tx["Assets/Sprites/player.png"]),
+    player(this, Tx["Assets/Sprites/player.png"], sf::Vector2f(0, _height/2)),
     width(_width), height(_height),
     map_objects()
 {
     tiles = new Tile*[height];
     const int road_y = height/2;
+    const int mess_y = height*3/4;
     for (int y=0; y<height; ++y) {
         tiles[y] = new Tile[width];
         for (int x=0; x<height; ++x) {
-            if (x == 1 && y == 1) {
+            if (x == 1 && y == road_y + 1) {
                 tiles[y][x] = Tile(this, 5);
             }
-            else if (x == 10 && y < 10) {
+            else if (x == 10 && y > road_y && y < road_y + 10) {
                 tiles[y][x] = Tile(this, 5);
             }
             else if (abs(y - road_y) < road_width/2) {
+                tiles[y][x] = Tile(this, 3);
+            }
+            else if (abs(y - mess_y) < road_width/2) {
                 tiles[y][x] = Tile(this, (x*x*17+x*5+y*29+x*y)%7+0);
-            } else {
-                tiles[y][x] = Tile(this, 0);
+            }
+            else {
+                tiles[y][x] = Tile(this, 1);
             }
         }
     }
     
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 10}, "Wood", 50, 8));
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {7, 13}, "Wood", 50, 8));
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {10, 14}, "Wood", 50, 8));
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 15}, "Wood", 50, 8));
+    spawn_map_resource(new BirchTree(this, {4, road_y + 10}, "Wood", 50, 8));
+    spawn_map_resource(new BirchTree(this, {7, road_y + 13}, "Wood", 50, 8));
+    spawn_map_resource(new BirchTree(this, {10, road_y + 14}, "Wood", 50, 8));
+    spawn_map_resource(new BirchTree(this, {4, road_y + 15}, "Wood", 50, 8));
     
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 15}, "Wood", 50, 8));
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {17, 15}, "Wood", 10, 3));
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 14}, "Wood", 10, 3));
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {19, 15}, "Wood", 10, 3));
-    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 16}, "Wood", 10, 3));
+    spawn_map_resource(new BirchTree(this, {18, road_y + 15}, "Wood", 50, 8));
+    spawn_map_resource(new BirchTree(this, {17, road_y + 15}, "Wood", 10, 3));
+    spawn_map_resource(new BirchTree(this, {18, road_y + 14}, "Wood", 10, 3));
+    spawn_map_resource(new BirchTree(this, {19, road_y + 15}, "Wood", 10, 3));
+    spawn_map_resource(new BirchTree(this, {18, road_y + 16}, "Wood", 10, 3));
 }
 
 World::~World() {

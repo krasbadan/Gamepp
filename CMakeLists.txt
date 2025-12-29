@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 
 set(CMAKE_CXX_COMPILER "g++")
+set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
@@ -21,6 +22,7 @@ target_sources(main
     "src/Character.cpp"
     "src/FontManager.cpp"
     "src/Interactable.cpp"
+    "src/InteractableDefinitions.cpp"
     "src/MapObject.cpp"
     "src/MapResource.cpp"    
     "src/NPC.cpp"
