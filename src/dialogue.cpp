@@ -1,0 +1,127 @@
+#include "dialogue.hpp"
+
+#include "FontManager.hpp"
+
+
+
+DialogueOption::DialogueOption(): text(L""), func(), is_active(false) {}
+
+float DialogueOption::calculate_margin(sf::Vector2f screen_size) {
+    //return 0.01*std::min(screen_size.x, screen_size.y);
+    return 0.01f*screen_size.y;
+}
+sf::Vector2f DialogueOption::calculate_size(sf::Vector2f screen_size, float margin) {
+    return sf::Vector2f(0.9f*(screen_size.x - 2*margin), 0.075f*screen_size.y);
+}
+float DialogueOption::calculate_font_size(sf::Vector2f option_size) {
+    return 0.6f*option_size.y;;
+}
+
+void DialogueOption::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    sf::Vector2f screen_size = target.getView().getSize();
+    sf::Vector2f option_size = calculate_size(screen_size, calculate_margin(screen_size));
+    float font_size = calculate_font_size(option_size);
+    float padding = 0.5f*(option_size.y - font_size);
+    float border = 0.1f*font_size;
+    
+    sf::RectangleShape rect(option_size);
+    rect.setFillColor(is_active ? sf::Color(0, 32, 0) : sf::Color(0, 0, 0));
+    rect.setOutlineColor(is_active ? sf::Color(128, 255, 128) : sf::Color(64, 64, 64));
+    rect.setOutlineThickness(-border);
+    target.draw(rect, states);
+    
+    sf::Text sf_text(Fx["cambria.ttc"]);
+    sf_text.setString(text);
+    sf_text.setCharacterSize(font_size);
+    target.draw(sf_text, translate(states, sf::Vector2f({padding, padding})));
+}
+
+DialogueOption::DialogueOption(const wchar_t* _text, std::function<Dialogue* ()> _func):
+    text(_text), func(_func), is_active(false)
+{}
+
+Dialogue* DialogueOption::operator()() {
+    return func();
+}
+
+std::wostream& operator<<(std::wostream& os, const DialogueOption& self) {
+    return os << self.text;
+}
+
+
+
+void Dialogue::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    // Перед вызовом этой функции в main.cpp должен быть установлен window.view в экранных пикселях
+    sf::Vector2f screen_size = target.getView().getSize();
+    float margin = DialogueOption::calculate_margin(screen_size);
+    sf::Vector2f option_size = DialogueOption::calculate_size(screen_size, margin);
+    float font_size = DialogueOption::calculate_font_size(option_size);
+    
+    sf::Vector2f dialogue_size(option_size.x + 2*margin,
+        font_size + 2*margin                  // text
+        + n_options*(option_size.y + margin)  // options
+    );
+    
+    float x = 0.5f*(screen_size.x - dialogue_size.x);
+    float y = screen_size.y - margin - dialogue_size.y;
+    
+    sf::RectangleShape rect(dialogue_size);
+    rect.setFillColor({0, 0, 0, 128});
+    target.draw(rect, translate(states, sf::Vector2f({x, y})));
+    x += margin;
+    
+    sf::Text sf_text(Fx["cambria.ttc"]);
+    sf_text.setString(text);
+    sf_text.setCharacterSize(font_size);
+    target.draw(sf_text, translate(states, sf::Vector2f({x, y})));
+    y += font_size + 2*margin;
+    
+    for (int i=0; i<n_options; ++i) {
+        target.draw(options[i], translate(states, sf::Vector2f({x, y})));
+        y += option_size.y + margin;
+    }
+}
+
+Dialogue::Dialogue(const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
+    text(_text), n_options(_n_options), active_option(0)
+{
+    options = new DialogueOption[_n_options];
+    int i = 0;
+    for (DialogueOption x : list) {
+        options[i] = x;
+        ++i;
+    }
+    options[0].is_active = true;
+}
+Dialogue::~Dialogue() {
+    delete[] options;
+}
+
+int Dialogue::get_n_options() const {
+    return n_options;
+}
+int Dialogue::get_active_option() const {
+    return active_option;
+}
+void Dialogue::set_active_option(int index) {
+    if (index < 0 || index >= n_options)
+        throw DialogueError("New active option must be in [0, n_options)");
+    options[active_option].is_active = false;
+    active_option = index;
+    options[active_option].is_active = true;
+}
+
+Dialogue* Dialogue::choose_active_option() {
+    return options[active_option]();
+}
+Dialogue* Dialogue::choose_option(int index) {
+    return options[index]();
+}
+
+std::wostream& operator<<(std::wostream& os, const Dialogue& self) {
+    os << self.text << std::endl;
+    for (int i=0; i < self.n_options; ++i) {
+        os << i << ") " << self.options[i] << std::endl;
+    }
+    return os;
+}

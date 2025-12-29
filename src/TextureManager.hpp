@@ -12,7 +12,7 @@ private:
     std::map<std::string, sf::Texture> textures;
  
 public:
-    const sf::Texture& operator[](const std::string& texture);
+    const sf::Texture& operator[](const std::string& filename);
 };
 
 extern TextureManager Tx;

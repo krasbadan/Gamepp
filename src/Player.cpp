@@ -2,7 +2,10 @@
 #include <iostream>
 
 
-Player::Player(World* _worldptr, const sf::Texture& texture, int _hp_max) : Character(_worldptr, texture, _hp_max) {}
+Player::Player(World* _worldptr, const sf::Texture& texture, int _hp_max):
+    Character(_worldptr, texture, _hp_max),
+    active_dialogue(nullptr)
+{}
 
 void Player::update(float deltaTime) {
     sf::Vector2f movement{0.f, 0.f};

@@ -13,9 +13,12 @@ add_executable(main)
 
 target_sources(main
   PRIVATE
+    "src/dialogue.cpp"
+    
     "src/main.cpp"
     
     "src/Character.cpp"
+    "src/FontManager.cpp"
     "src/MapObject.cpp"
     "src/NPC.cpp"
     "src/Player.cpp"

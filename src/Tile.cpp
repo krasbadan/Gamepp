@@ -11,5 +11,5 @@ Tile::Tile(World* _worldptr, int _type, bool _is_passable, MapObject* _map_obj) 
     map_object(_map_obj),
     sprite(Tx[tile_types[_type].texture_filename]) 
 {
-    sprite.setScale({1.f/16.f, 1.f/16.f});
+    sprite.setScale({1.f/TILESIZE, 1.f/TILESIZE});
 }

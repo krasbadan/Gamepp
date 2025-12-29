@@ -2,8 +2,16 @@
 
 #include <functional>
 #include <iostream>
+#include <stdexcept>
 
 #include "Utils.hpp"
+
+
+
+class DialogueError: public std::runtime_error {
+public:
+    DialogueError(const char* msg): std::runtime_error(msg) {}
+};
 
 
 
@@ -14,66 +22,49 @@ class Dialogue;
 class DialogueOption: public sf::Drawable {
     friend Dialogue;
     
-    const char* text;
+    const wchar_t* text;
     std::function<Dialogue* ()> func;
+    bool is_active;
     
-    DialogueOption(): text(""), func() {}
+    DialogueOption();
     
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
-        sf::RectangleShape rect({1.f, 1.f});
-        rect.setFillColor({0, 0, 0});
-        rect.setOutlineThickness(0.05f);
-        target.draw(rect, states);
-    }
+    static float calculate_margin(sf::Vector2f screen_size);
+    static sf::Vector2f calculate_size(sf::Vector2f screen_size, float margin);
+    
+    static float calculate_font_size(sf::Vector2f option_size);
+    
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 public:
-    DialogueOption(const char* _text, std::function<Dialogue* ()> _func):
-        text(_text), func(_func)
-    {}
+    DialogueOption(const wchar_t* _text, std::function<Dialogue* ()> _func);
     
-    Dialogue* operator()() {
-        return func();
-    }
+    Dialogue* operator()();
     
-    friend std::ostream& operator<<(std::ostream& os, const DialogueOption& self);
+    friend std::wostream& operator<<(std::wostream& os, const DialogueOption& self);
 };
 
-std::ostream& operator<<(std::ostream& os, const DialogueOption& self) {
-    return os << self.text;
-}
+std::wostream& operator<<(std::wostream& os, const DialogueOption& self);
 
 
 
 class Dialogue: public sf::Drawable {
-    const char* text;
+    const wchar_t* text;
     int n_options;
+    int active_option;
     DialogueOption* options;
+    
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 public:
-    Dialogue(const char* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
-        text(_text), n_options(_n_options)
-    {
-        options = new DialogueOption[_n_options];
-        int i = 0;
-        for (DialogueOption x : list) {
-            options[i] = x;
-            ++i;
-        }
-    }
+    Dialogue(const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list);
+    ~Dialogue();
     
-    int get_n_options() const {
-        return n_options;
-    }
+    int get_n_options() const;
+    int get_active_option() const;
+    void set_active_option(int index);
     
-    Dialogue* choose_option(int index) {
-        return options[index]();
-    }
+    Dialogue* choose_active_option();
+    Dialogue* choose_option(int index);
     
-    friend std::ostream& operator<<(std::ostream& os, const Dialogue& self);
+    friend std::wostream& operator<<(std::wostream& os, const Dialogue& self);
 };
 
-std::ostream& operator<<(std::ostream& os, const Dialogue& self) {
-    os << self.text << std::endl;
-    for (int i=0; i < self.n_options; ++i) {
-        os << i << ") " << self.options[i] << std::endl;
-    }
-    return os;
-}
+std::wostream& operator<<(std::wostream& os, const Dialogue& self);

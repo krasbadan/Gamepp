@@ -10,7 +10,7 @@
 
 
 World::World(int _width, int _height):
-    player(this, Tx["Assets/player.png"]),
+    player(this, Tx["Assets/Sprites/player.png"]),
     width(_width), height(_height)
 {
     tiles = new Tile*[height];
@@ -56,8 +56,10 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
     sf::Vector2f pPos = player.get_central_point();
     
-    int size_x = target.getView().getSize().x, size_y = target.getView().getSize().y, min_r = 4;
-    int radius = std::max({size_x/2, size_y/2, min_r});
+    float size_x = target.getView().getSize().x;
+    float size_y = target.getView().getSize().y;
+    float min_r = 4;
+    float radius = std::max({size_x/2, size_y/2/ISO_SCALE_Y, min_r});
     float margin = 1.5; // > sqrt(2);
 
     int start_x = std::max(0, (int)floor(pPos.x - radius * margin));
@@ -82,7 +84,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
     for (int y = start_y; y < end_y; y++) {
         for (int x = start_x; x < end_x; x++) {
-            if (tiles[y][x].map_object) {
+            if (tiles[y][x].map_object != nullptr) {
                 MapObject* obj = tiles[y][x].map_object;
                 sf::Vector2f logicPos = {(float)x, (float)y};
                 sf::Vector2f isoPos = isoMatrix.transformPoint(logicPos);

@@ -1,4 +1,5 @@
 #include "TextureManager.hpp"
+#include "Utils.hpp"
 
 
 
@@ -6,8 +7,8 @@ const sf::Texture& TextureManager::operator[](const std::string& filename) {
     std::map<std::string, sf::Texture>::iterator T = textures.find(filename);
     if (T == textures.end()) {
         sf::Texture tex; sf::IntRect area = {};
-        if (filename.find("Assets/Tiles/") != std::string::npos) {
-            area = sf::IntRect({0, 0}, {16, 16});
+        if (filename.find("Assets/Sprites/Tiles/") != std::string::npos) {
+            area = sf::IntRect({0, 0}, {TILESIZE, TILESIZE});
         }
         if (!tex.loadFromFile(filename, false, area)) {
             throw;

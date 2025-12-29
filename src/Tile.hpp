@@ -22,13 +22,13 @@ const int n_tile_types = 7;
 */
 
 const TileType tile_types[n_tile_types] = {
-	{"Assets/Tiles/default_block.png", true},
-	{"Assets/Tiles/grass.png", true},
-	{"Assets/Tiles/dirt.png", true},
-	{"Assets/Tiles/road.png", true},
-	{"Assets/Tiles/sand.png", true},
-	{"Assets/Tiles/cliff.png", false},
-	{"Assets/Tiles/water.png", true},
+	{"Assets/Sprites/Tiles/default_block.png", true},
+	{"Assets/Sprites/Tiles/grass.png", true},
+	{"Assets/Sprites/Tiles/dirt.png", true},
+	{"Assets/Sprites/Tiles/road.png", true},
+	{"Assets/Sprites/Tiles/sand.png", true},
+	{"Assets/Sprites/Tiles/cliff.png", false},
+	{"Assets/Sprites/Tiles/water.png", true},
 };
 
 struct Tile {

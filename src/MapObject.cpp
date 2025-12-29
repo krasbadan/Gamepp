@@ -18,7 +18,10 @@ sf::Vector2f MapObject::get_bottom_point() const {
     return bottom;
 }
 
-sf::Vector2f MapObject::get_central_point() const {return getPosition() - sf::Vector2f(ingame_height / 2.f, ingame_height / 2.f);} // need to divide both coords because of the iso-projection
+sf::Vector2f MapObject::get_central_point() const {
+    // need to divide both coords because of the iso-projection
+    return getPosition() - sf::Vector2f(ingame_height / 2.f, ingame_height / 2.f);
+}
 
 MapObject::MapObject(World* _worldptr, const sf::Texture& texture, sf::Vector2i _pos, float _ingame_height): 
     worldptr(_worldptr), sprite(texture), pos(_pos), ingame_height(_ingame_height),
