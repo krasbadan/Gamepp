@@ -22,7 +22,7 @@ public:
 	int width, height;
 	Tile** tiles;
     
-	World(int _width, int _height);
+	World(const Presenter& presenter, int _width, int _height);
     ~World();
 	
 	void update(float deltaTime);

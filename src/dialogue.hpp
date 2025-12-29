@@ -54,7 +54,9 @@ class Dialogue: public sf::Drawable {
     
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 public:
-    Dialogue(const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list);
+    Interactable* interactable;
+    
+    Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list);
     ~Dialogue();
     
     int get_n_options() const;

@@ -9,12 +9,29 @@
 #include "Utils.hpp"
 
 #include "Player.hpp"
+#include "Presenter.hpp"
 #include "World.hpp"
 #include "MapObject.hpp"
 
 
+
 TextureManager Tx;
 FontManager Fx;
+
+
+
+class WindowInteractable: public Interactable {
+    virtual Dialogue* interact() override {
+        return nullptr;
+    }
+    
+    virtual sf::Vector2f get_interact_pos() const override {
+        return sf::Vector2f(0.f, 0.f);
+    }
+    virtual float get_interact_distance() const override {
+        return INFINITY;
+    }
+};
 
 
 
@@ -37,14 +54,17 @@ int main() {
     
     
     
-    World world(500, 500);
+    Interactable* window_interactable = new WindowInteractable();
+    
+    Presenter presenter;
+    World world(presenter, 500, 500);
     
     
     
     const auto onClosed = [&window](const sf::Event::Closed& event) {
         window.close();
     };
-    const auto onKeyPressed = [&window, &world](const sf::Event::KeyPressed& event) {
+    const auto onKeyPressed = [&window, &window_interactable, &presenter, &world](const sf::Event::KeyPressed& event) {
         Dialogue* ad;
         
         switch (event.scancode) {
@@ -52,6 +72,7 @@ int main() {
                 ad = world.player.active_dialogue;
                 if (ad == nullptr) {
                     world.player.active_dialogue = new Dialogue(
+                        window_interactable,
                         L"Выйти из игры?",
                         2,
                         {
@@ -71,22 +92,35 @@ int main() {
                 break;
             case sf::Keyboard::Scancode::Up:
                 ad = world.player.active_dialogue;
-                if (ad != nullptr) {
+                if (ad != nullptr && ad->get_n_options() != 0) {
                     ad->set_active_option(mod(ad->get_active_option() - 1, ad->get_n_options()));
                 }
                 break;
             case sf::Keyboard::Scancode::Down:
                 ad = world.player.active_dialogue;
-                if (ad != nullptr) {
+                if (ad != nullptr && ad->get_n_options() != 0) {
                     ad->set_active_option(mod(ad->get_active_option() + 1, ad->get_n_options()));
                 }
                 break;
             case sf::Keyboard::Scancode::Enter:
                 ad = world.player.active_dialogue;
                 if (ad != nullptr) {
-                    Dialogue* new_dial = ad->choose_active_option();
-                    delete ad;
-                    world.player.active_dialogue = new_dial;
+                    if (ad->get_n_options() == 0) {
+                        delete ad;
+                        world.player.active_dialogue = nullptr;
+                    } else {
+                        Dialogue* new_dial = ad->choose_active_option();
+                        delete ad;
+                        world.player.active_dialogue = new_dial;
+                    }
+                }
+                break;
+            default:
+                for (int ai = 0; ai < presenter.n_E_like_keys; ++ai) {
+                    if (event.scancode == presenter.E_like_scancodes[ai] && presenter.available_interactables[ai] != nullptr) {
+                        world.player.active_dialogue = presenter.available_interactables[ai]->interact();
+                        break;
+                    }
                 }
                 break;
         }

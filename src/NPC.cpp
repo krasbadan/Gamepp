@@ -11,7 +11,7 @@ void NPC::update(float deltaTime) {
 }
 
 Dialogue* NPC::interact() {
-    return new Dialogue(L"Привет!", 0, {});
+    return new Dialogue(this, L"Привет!", 0, {});
 }
 
 sf::Vector2f NPC::get_interact_pos() const {

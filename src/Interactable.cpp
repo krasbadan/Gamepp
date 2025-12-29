@@ -18,7 +18,7 @@ void Interactable::draw(sf::RenderTarget& target, sf::RenderStates states) const
     rect.setPosition(draw_pos - sf::Vector2f(0.5f, 0.5f)*rect_size);
     target.draw(rect, states);
     
-    sf::Text sf_text(Fx["cambria.ttc"], "E", font_antialias_k);
+    sf::Text sf_text(Fx["cambria.ttc"], key_name, font_antialias_k);
     sf_text.setFillColor({255, 255, 255});
     sf_text.setOutlineColor({0, 0, 0});
     sf_text.setOutlineThickness(-0.05f*font_antialias_k);

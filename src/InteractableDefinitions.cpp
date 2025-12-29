@@ -1,7 +1,5 @@
 #include "dialogue.hpp"
 
-#include <format>
-
 #include "MapResource.hpp"
 #include "NPC.hpp"
 
@@ -10,7 +8,8 @@
 Dialogue* BirchTree::interact() {
     if (amount > 0) {
         return new Dialogue(
-            std::format(L"Хочешь берёзового сока? Есть {} литров.", amount).data(),
+            this,
+            str_format(L"Хочешь берёзового сока? Есть {} литров.", amount),
             3,
             {
                 DialogueOption(L"Спасибо, дорогая берёзка, пока не хочу...", []() -> Dialogue* {
@@ -28,6 +27,7 @@ Dialogue* BirchTree::interact() {
         );
     } else {
         return new Dialogue(
+            this,
             L"Берёзового сока сейчас нет. Приходи позже!",
             0,
             {}
@@ -38,7 +38,8 @@ Dialogue* BirchTree::interact() {
 Dialogue* BirchTree::next_dial() {
     if (amount > 0) {
         return new Dialogue(
-            std::format(L"Продолжай пить! Всё ещё остаётся {} литров.", amount).data(),
+            this,
+            str_format(L"Продолжай пить! Всё ещё остаётся {} литров.", amount),
             3,
             {
                 DialogueOption(L"Спасибо, дорогая берёзка, больше не хочу...", []() -> Dialogue* {
@@ -56,6 +57,7 @@ Dialogue* BirchTree::next_dial() {
         );
     } else {
         return new Dialogue(
+            this,
             L"Берёзового сока сейчас нет. Приходи позже!",
             0,
             {}
