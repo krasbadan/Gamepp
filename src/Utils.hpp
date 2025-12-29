@@ -4,6 +4,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "str_format.hpp"
+
 
 
 const float EPS = 1e-9;
@@ -19,6 +21,7 @@ class MapObject;
 class MapResource;
 class NPC;
 class Player;
+class Presenter;
 class TextureManager;
 class AnimationHandler;
 class Tile;

@@ -1,9 +1,11 @@
 #include "Player.hpp"
+
 #include <iostream>
 
 
-Player::Player(World* _worldptr, sf::Vector2f pos, const sf::Texture& texture, sf::Vector2f anim_origin, float _ingame_height, int _hp_max):
+Player::Player(const Presenter& _presenter, World* _worldptr, sf::Vector2f pos, const sf::Texture& texture, sf::Vector2f anim_origin, float _ingame_height, int _hp_max):
     Character(_worldptr, texture, pos, anim_origin, _ingame_height, _hp_max),
+    presenter(_presenter),
     active_dialogue(nullptr)
 {
     Animation idle(0, 7, 0.15f); animation_handler.addAnim(idle);

@@ -8,6 +8,8 @@
 
 class Interactable: public sf::Drawable {
 public:
+    const char* key_name;
+    
     virtual Dialogue* interact() = 0;
     
     virtual sf::Vector2f get_interact_pos() const = 0;

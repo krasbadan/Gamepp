@@ -85,8 +85,8 @@ void Dialogue::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     }
 }
 
-Dialogue::Dialogue(const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
-    text(_text), n_options(_n_options), active_option(0)
+Dialogue::Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
+    interactable(_interactable), text(_text), n_options(_n_options), active_option(0)
 {
     options = new DialogueOption[_n_options];
     int i = 0;
@@ -115,6 +115,8 @@ void Dialogue::set_active_option(int index) {
 }
 
 Dialogue* Dialogue::choose_active_option() {
+    if (active_option < 0 || active_option >= n_options)
+        throw DialogueError("New active option index must be in range [0, n_options)");
     return options[active_option]();
 }
 Dialogue* Dialogue::choose_option(int index) {

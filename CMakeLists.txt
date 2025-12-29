@@ -27,6 +27,7 @@ target_sources(main
     "src/MapResource.cpp"    
     "src/NPC.cpp"
     "src/Player.cpp"
+    "src/Presenter.cpp"
     "src/TextureManager.cpp"
     "src/AnimationHandler.cpp"
     "src/Tile.cpp"
