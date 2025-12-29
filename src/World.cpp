@@ -107,7 +107,7 @@ sf::Vector2f World::get_iso_pos(sf::Vector2f logicPos) {
 }
 
 World::World(int _width, int _height):
-    player(this, Tx["Assets/Sprites/player.png"], sf::Vector2f(0, _height/2)),
+    player(this, sf::Vector2f(0, _height/2)),
     width(_width), height(_height),
     map_objects()
 {

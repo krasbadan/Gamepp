@@ -116,7 +116,7 @@ int main() {
         if (window_focus) {
             window.clear(sf::Color {0, 100, 20});
             
-            view.setCenter(World::get_iso_pos(world.player.get_central_point()));
+            view.setCenter(World::get_iso_pos(world.player.getPosition() - sf::Vector2f(1, 1)/1.5));
             window.setView(view);
             window.draw(world);
             

@@ -2,8 +2,8 @@
 
 
 
-NPC::NPC(World* _worldptr, const sf::Texture& texture, sf::Vector2f pos, float _ingame_height, int _hp_max):
-    Character(_worldptr, texture, pos, _ingame_height, _hp_max)
+NPC::NPC(World* _worldptr, const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f anim_origin, float _ingame_height, int _hp_max):
+    Character(_worldptr, texture, pos, anim_origin, _ingame_height, _hp_max)
 {}
 
 void NPC::update(float deltaTime) {

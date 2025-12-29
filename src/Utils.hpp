@@ -20,6 +20,7 @@ class MapResource;
 class NPC;
 class Player;
 class TextureManager;
+class AnimationHandler;
 class Tile;
 class World;
 

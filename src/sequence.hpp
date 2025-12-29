@@ -87,8 +87,8 @@ public:
         bool_arr = static_cast<bool*>(malloc(arr_size*sizeof(bool)));
         if (bool_arr == nullptr)
             throw std::bad_alloc();
-        memcpy(arr, other.arr, size);
-        memcpy(bool_arr, other.bool_arr, size);
+        memcpy(arr, other.arr, size*sizeof(T));
+        memcpy(bool_arr, other.bool_arr, size*sizeof(T));
     }
     Sequence(Sequence&&) = default;
     ~Sequence() {

@@ -28,6 +28,7 @@ target_sources(main
     "src/NPC.cpp"
     "src/Player.cpp"
     "src/TextureManager.cpp"
+    "src/AnimationHandler.cpp"
     "src/Tile.cpp"
     "src/Utils.cpp"
     "src/World.cpp"

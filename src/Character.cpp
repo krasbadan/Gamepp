@@ -21,12 +21,9 @@ sf::Vector2f Character::get_central_point() const {
     return getPosition() - sf::Vector2f(ingame_height / 2.f, ingame_height / 2.f);
 }
 
-Character::Character(World* _worldptr, const sf::Texture& texture, sf::Vector2f pos, float _ingame_height, int _hp_max):
-    worldptr(_worldptr), sprite(texture), ingame_height(_ingame_height), hp_max(_hp_max), hp(_hp_max)
+Character::Character(World* _worldptr, const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f anim_origin, float _ingame_height, int _hp_max):
+    worldptr(_worldptr), sprite(texture), ingame_height(_ingame_height), hp_max(_hp_max), hp(_hp_max), animation_handler(sf::IntRect({0, 0}, {160, 111}))
 {
-    sprite.setOrigin(get_bottom_point());
-	float scale = ingame_height/texture.getSize().y;
-	sprite.setScale(sf::Vector2f(scale, scale));
     setPosition(pos);
 }
 
