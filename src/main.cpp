@@ -76,11 +76,11 @@ int main() {
                         L"Выйти из игры?",
                         2,
                         {
-                            DialogueOption(L"Нет", []() -> Dialogue* {
-                                return nullptr;
-                            }),
                             DialogueOption(L"Да", [&window]() -> Dialogue* {
                                 window.close();
+                                return nullptr;
+                            }),
+                            DialogueOption(L"Нет", []() -> Dialogue* {
                                 return nullptr;
                             }),
                         }
