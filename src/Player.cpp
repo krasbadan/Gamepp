@@ -16,7 +16,7 @@ void Player::update(float deltaTime) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A)) { movement.x -= s; movement.y += s; }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D)) { movement.x += s; movement.y -= s; }
 
-    if (abs(movement.x) < EPS && abs(movement.y) < EPS) return;
+    if (fabs(movement.x) < EPS && fabs(movement.y) < EPS) return;
     if (movement.x == 0 || movement.y == 0) {movement.x *= 0.707; movement.y *= 0.707;}
 
     /*

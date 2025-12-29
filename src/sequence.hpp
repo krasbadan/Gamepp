@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <stdexcept>
+#include <cstring>
 
 
 
