@@ -16,6 +16,7 @@ public:
     Sequence<MapObject*> map_objects;
 	
 	World(int _width, int _height);
+    ~World();
 	
 	void update(float deltaTime);
 

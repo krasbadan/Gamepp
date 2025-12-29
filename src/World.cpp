@@ -45,6 +45,17 @@ World::World(int _width, int _height):
     map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 16}, 3));
 }
 
+World::~World() {
+    for (int y=0; y<height; ++y) {
+        delete[] tiles[y];
+    }
+    delete[] tiles;
+    
+    for (int i=0; i<map_objects.get_size(); ++i) {
+        delete map_objects[i];
+    }
+}
+
 void World::update(float deltaTime) {
     player.update(deltaTime);
 }

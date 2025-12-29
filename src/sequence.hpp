@@ -113,8 +113,6 @@ public:
     T& operator[](int index) const {
         if (index < 0 || index >= size)
             throw SequenceError("Index must be in range [0, size)");
-        if (!bool_arr[index])
-            throw SequenceError("Access by index to a removed element");
         return arr[index];
     }
     
