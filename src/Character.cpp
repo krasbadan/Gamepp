@@ -16,9 +16,14 @@ sf::Vector2f Character::get_bottom_point() const {
     return bottom;
 }
 
-sf::Vector2f Character::get_central_point() const {return getPosition() - sf::Vector2f(ingame_height / 2.f, ingame_height / 2.f);} // need to divide both coords because of the iso-projection
+sf::Vector2f Character::get_central_point() const {
+    // need to divide both coords because of the iso-projection
+    return getPosition() - sf::Vector2f(ingame_height / 2.f, ingame_height / 2.f);
+}
 
-Character::Character(World* _worldptr, const sf::Texture& texture, int _hp_max): worldptr(_worldptr), sprite(texture), hp_max(_hp_max), hp(_hp_max) {
+Character::Character(World* _worldptr, const sf::Texture& texture, float _ingame_height, int _hp_max):
+    worldptr(_worldptr), sprite(texture), ingame_height(_ingame_height), hp_max(_hp_max), hp(_hp_max)
+{
     sprite.setOrigin(get_bottom_point());
 	float scale = ingame_height/texture.getSize().y;
 	sprite.setScale(sf::Vector2f(scale, scale));

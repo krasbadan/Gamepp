@@ -33,7 +33,7 @@ void DialogueOption::draw(sf::RenderTarget& target, sf::RenderStates states) con
     sf::Text sf_text(Fx["cambria.ttc"]);
     sf_text.setString(text);
     sf_text.setCharacterSize(font_size);
-    target.draw(sf_text, translate(states, sf::Vector2f({padding, padding})));
+    target.draw(sf_text, translate_states(states, sf::Vector2f({padding, padding})));
 }
 
 DialogueOption::DialogueOption(const wchar_t* _text, std::function<Dialogue* ()> _func):
@@ -68,17 +68,19 @@ void Dialogue::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     
     sf::RectangleShape rect(dialogue_size);
     rect.setFillColor({0, 0, 0, 128});
-    target.draw(rect, translate(states, sf::Vector2f({x, y})));
+    rect.setPosition(sf::Vector2f(x, y));
+    target.draw(rect, states);
     x += margin;
     
     sf::Text sf_text(Fx["cambria.ttc"]);
     sf_text.setString(text);
     sf_text.setCharacterSize(font_size);
-    target.draw(sf_text, translate(states, sf::Vector2f({x, y})));
+    sf_text.setPosition(sf::Vector2f(x, y));
+    target.draw(sf_text, states);
     y += font_size + 2*margin;
     
     for (int i=0; i<n_options; ++i) {
-        target.draw(options[i], translate(states, sf::Vector2f({x, y})));
+        target.draw(options[i], translate_states(states, sf::Vector2f(x, y)));
         y += option_size.y + margin;
     }
 }

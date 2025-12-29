@@ -2,8 +2,8 @@
 #include <iostream>
 
 
-Player::Player(World* _worldptr, const sf::Texture& texture, int _hp_max):
-    Character(_worldptr, texture, _hp_max),
+Player::Player(World* _worldptr, const sf::Texture& texture, float _ingame_height, int _hp_max):
+    Character(_worldptr, texture, _ingame_height, _hp_max),
     active_dialogue(nullptr)
 {}
 

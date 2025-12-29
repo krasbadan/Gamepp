@@ -7,8 +7,8 @@
 class Character : public sf::Drawable, public sf::Transformable {
 protected:
     World* worldptr;
-    float speed = 4.0f;
-	float ingame_height = 1.8f;
+    float speed;
+	float ingame_height;
     int hp_max, hp;
     sf::Sprite sprite;
 
@@ -19,7 +19,7 @@ protected:
 public:
     sf::Vector2f get_central_point() const;
 
-    Character(World* _worldptr, const sf::Texture& texture, int _hp_max = 100);
+    Character(World* _worldptr, const sf::Texture& texture, float _ingame_height, int _hp_max = 100);
 
     bool can_move(sf::Vector2f vec);
 

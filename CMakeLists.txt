@@ -17,13 +17,16 @@ target_sources(main
     
     "src/main.cpp"
     
+    "src/Building.cpp"
     "src/Character.cpp"
     "src/FontManager.cpp"
+    "src/Interactable.cpp"
     "src/MapObject.cpp"
+    "src/MapResource.cpp"    
     "src/NPC.cpp"
     "src/Player.cpp"
-    "src/Tile.cpp"
     "src/TextureManager.cpp"
+    "src/Tile.cpp"
     "src/Utils.cpp"
     "src/World.cpp"
 )

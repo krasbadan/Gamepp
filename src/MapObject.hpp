@@ -19,8 +19,9 @@ protected:
 
 public:
     sf::Vector2f get_central_point() const;
-
+    sf::Vector2i get_pos() const;
+    
     MapObject(World* _worldptr, const sf::Texture& texture, sf::Vector2i pos, float ingame_height = 2.f);
-
+    
     virtual void update(float deltaTime);
 };

@@ -18,9 +18,15 @@ sf::Vector2i floor(sf::Vector2f vec){
     return sf::Vector2i({static_cast<int>(floor(vec.x)), static_cast<int>(floor(vec.y))});
 }
 
-sf::RenderStates translate(sf::RenderStates states, sf::Vector2f shift) {
+sf::RenderStates translate_states(sf::RenderStates states, sf::Vector2f shift) {
     sf::Transform transform;
     transform.translate(shift);
+    states.transform *= transform;
+    return states;
+}
+sf::RenderStates scale_states(sf::RenderStates states, sf::Vector2f scale) {
+    sf::Transform transform;
+    transform.scale(scale);
     states.transform *= transform;
     return states;
 }

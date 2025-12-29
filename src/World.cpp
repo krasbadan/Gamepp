@@ -5,70 +5,13 @@
 
 #include "sequence.hpp"
 
+#include "Building.hpp"
+#include "Interactable.hpp"
+#include "MapResource.hpp"
+#include "NPC.hpp"
 #include "TextureManager.hpp"
 #include "Tile.hpp"
 #include "MapObject.hpp"
-
-
-
-World::World(int _width, int _height):
-    player(this, Tx["Assets/Sprites/player.png"]),
-    width(_width), height(_height),
-    map_objects()
-{
-    tiles = new Tile*[height];
-    const int road_y = height/2;
-    for (int y=0; y<height; ++y) {
-        tiles[y] = new Tile[width];
-        for (int x=0; x<height; ++x) {
-            if (x == 1 && y == 1) {
-                tiles[y][x] = Tile(this, 5);
-            }
-            else if (x == 10 && y < 10) {
-                tiles[y][x] = Tile(this, 5);
-            }
-            else if (abs(y - road_y) < road_width/2) {
-                tiles[y][x] = Tile(this, (x*x*17+x*5+y*29+x*y)%7+0);
-            } else {
-                tiles[y][x] = Tile(this, 0);
-            }
-        }
-    }
-    
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 10}, 8));
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {7, 13}, 8));
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {10, 14}, 8));
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 15}, 8));
-    
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 15}, 8));
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {17, 15}, 3));
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 14}, 3));
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {19, 15}, 3));
-    map_objects.push_back(new MapObject(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 16}, 3));
-}
-
-World::~World() {
-    for (int y=0; y<height; ++y) {
-        delete[] tiles[y];
-    }
-    delete[] tiles;
-    
-    for (int i=0; i<map_objects.get_size(); ++i) {
-        delete map_objects[i];
-    }
-}
-
-void World::update(float deltaTime) {
-    player.update(deltaTime);
-}
-
-sf::Vector2f World::get_iso_pos(sf::Vector2f logicPos) {
-    sf::Transform isoMatrix;
-    isoMatrix.scale({1.0f, ISO_SCALE_Y}); 
-    isoMatrix.rotate(sf::degrees(45.0f));
-    
-    return isoMatrix.transformPoint(logicPos);
-}
 
 
 
@@ -85,7 +28,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
     sf::RenderStates tileStates = states;
     tileStates.transform *= isoMatrix;
-
+    
     sf::Vector2f pPos = player.get_central_point();
     
     float size_x = target.getView().getSize().x;
@@ -130,9 +73,110 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     
     draw_order.push_back({&player, playerStates, playerLogicPos.x + playerLogicPos.y});
     
+    
+    
     draw_order.sort([](const CurrentDrawable& a, const CurrentDrawable& b) -> bool {return a.z < b.z;});
     
     for (CurrentDrawable& a : draw_order) {
         target.draw(*a.drawable, a.states);
     }
+    
+    
+    
+    for (Interactable* a : interactables) {
+        sf::Vector2f iLogicPos = a->get_interact_pos();
+        
+        if ((iLogicPos - player.getPosition()).length() <= a->get_interact_distance()) {
+            sf::Vector2f iIsoPos = isoMatrix.transformPoint(iLogicPos);
+            sf::RenderStates iStates = states;
+            iStates.transform.translate(iIsoPos);
+            iStates.transform.translate(-iLogicPos);
+            target.draw(*a, iStates);
+        }
+    }
+}
+
+
+
+sf::Vector2f World::get_iso_pos(sf::Vector2f logicPos) {
+    sf::Transform isoMatrix;
+    isoMatrix.scale({1.0f, ISO_SCALE_Y}); 
+    isoMatrix.rotate(sf::degrees(45.0f));
+    
+    return isoMatrix.transformPoint(logicPos);
+}
+
+World::World(int _width, int _height):
+    player(this, Tx["Assets/Sprites/player.png"]),
+    width(_width), height(_height),
+    map_objects()
+{
+    tiles = new Tile*[height];
+    const int road_y = height/2;
+    for (int y=0; y<height; ++y) {
+        tiles[y] = new Tile[width];
+        for (int x=0; x<height; ++x) {
+            if (x == 1 && y == 1) {
+                tiles[y][x] = Tile(this, 5);
+            }
+            else if (x == 10 && y < 10) {
+                tiles[y][x] = Tile(this, 5);
+            }
+            else if (abs(y - road_y) < road_width/2) {
+                tiles[y][x] = Tile(this, (x*x*17+x*5+y*29+x*y)%7+0);
+            } else {
+                tiles[y][x] = Tile(this, 0);
+            }
+        }
+    }
+    
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 10}, "Wood", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {7, 13}, "Wood", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {10, 14}, "Wood", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, 15}, "Wood", 50, 8));
+    
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 15}, "Wood", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {17, 15}, "Wood", 10, 3));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 14}, "Wood", 10, 3));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {19, 15}, "Wood", 10, 3));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, 16}, "Wood", 10, 3));
+}
+
+World::~World() {
+    for (int y=0; y<height; ++y) {
+        delete[] tiles[y];
+    }
+    delete[] tiles;
+    
+    for (int i=0; i<map_objects.get_size(); ++i) {
+        delete map_objects[i];
+    }
+}
+
+void World::update(float deltaTime) {
+    player.update(deltaTime);
+}
+
+
+
+void World::spawn_building(Building* building) {
+    map_objects.push_back(building);
+    
+    sf::Vector2i pos = building->get_pos();
+    tiles[pos.y][pos.x].map_object = building;
+    tiles[pos.y][pos.x].is_passable = false;
+}
+
+void World::spawn_map_resource(MapResource* map_resource) {
+    map_objects.push_back(map_resource);
+    interactables.push_back(map_resource);
+    
+    sf::Vector2i pos = map_resource->get_pos();
+    tiles[pos.y][pos.x].map_object = map_resource;
+    tiles[pos.y][pos.x].is_passable = false;
+}
+
+void World::spawn_npc(NPC* npc) {
+    npcs.push_back(npc);
+    interactables.push_back(npc);
 }

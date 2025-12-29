@@ -23,6 +23,10 @@ sf::Vector2f MapObject::get_central_point() const {
     return getPosition() - sf::Vector2f(ingame_height / 2.f, ingame_height / 2.f);
 }
 
+sf::Vector2i MapObject::get_pos() const {
+    return pos;
+}
+
 MapObject::MapObject(World* _worldptr, const sf::Texture& texture, sf::Vector2i _pos, float _ingame_height): 
     worldptr(_worldptr), sprite(texture), pos(_pos), ingame_height(_ingame_height),
     tile(&_worldptr->tiles[_pos.y][_pos.x]) 
@@ -30,8 +34,6 @@ MapObject::MapObject(World* _worldptr, const sf::Texture& texture, sf::Vector2i 
     sprite.setOrigin(get_bottom_point() - sf::Vector2f(0.f, texture.getSize().y/ingame_height)*0.75);
 	float scale = ingame_height/texture.getSize().y;
 	sprite.setScale(sf::Vector2f(scale, scale));
-    tile->map_object = this;
-    tile->is_passable = false;
 }
 
 void MapObject::update(float deltaTime) {}

@@ -9,19 +9,25 @@
 
 class World: public sf::Drawable {
 	static const int road_width = 8;
+    
+    Sequence<MapObject*> map_objects;
+    Sequence<NPC*> npcs;
+    Sequence<Interactable*> interactables;
+    
+    virtual void draw(sf::RenderTarget& target, [[maybe_unused]] sf::RenderStates states) const override;
 public:
-	Player player;
+    static sf::Vector2f get_iso_pos(sf::Vector2f logicPos);
+	
+    Player player;
 	int width, height;
 	Tile** tiles;
-    Sequence<MapObject*> map_objects;
-	
+    
 	World(int _width, int _height);
     ~World();
 	
 	void update(float deltaTime);
-
-	static sf::Vector2f get_iso_pos(sf::Vector2f logicPos);
-
-private:
-	virtual void draw(sf::RenderTarget& target, [[maybe_unused]] sf::RenderStates states) const override;
+    
+    void spawn_building(Building* building);
+    void spawn_map_resource(MapResource* map_resource);
+    void spawn_npc(NPC* npc);
 };
