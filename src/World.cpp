@@ -112,8 +112,10 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 sf::Vector2f isoPos = isoMatrix.transformPoint(logicPos);
                 sf::RenderStates objStates = states;
                 objStates.transform.translate(isoPos);
-
-                draw_order.push_back({obj, objStates, (float)(x+y)+1});
+                
+                // (x, y) is the coords of the on-screen top corner of the tile.
+                // (x+0.5, y+0.5) is the coords of the tile center, which is 1.f further at z. 
+                draw_order.push_back({obj, objStates, (float)(x+y)+1.f});
             }
         }
     }

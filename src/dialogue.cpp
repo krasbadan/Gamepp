@@ -50,8 +50,9 @@ std::wostream& operator<<(std::wostream& os, const DialogueOption& self) {
 
 
 
+// Before call, set window.view to true pixel scale as
+// window.setView(sf::View(sf::FloatRect({0.f, 0.f}, sf::Vector2f(window.getSize()))))
 void Dialogue::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    // Перед вызовом этой функции в main.cpp должен быть установлен window.view в экранных пикселях
     sf::Vector2f screen_size = target.getView().getSize();
     float margin = DialogueOption::calculate_margin(screen_size);
     sf::Vector2f option_size = DialogueOption::calculate_size(screen_size, margin);
