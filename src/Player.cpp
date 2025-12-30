@@ -36,17 +36,19 @@ void Player::update(float deltaTime) {
     float s = speed * deltaTime;
     bool was_flipped = is_flipped;
     
-    
+    if (animation_handler.get_anim_duration() != 0) s /= 1000;
+    else if (presenter.check_input_shift()) s *= 4;
+
     if (presenter.check_input_move_up()) { movement.x -= s; movement.y -= s; }
     if (presenter.check_input_move_down()) { movement.x += s; movement.y += s; }
     if (presenter.check_input_move_left()) { movement.x -= s; movement.y += s; }
     if (presenter.check_input_move_right()) { movement.x += s; movement.y -= s; }
-    if (animation_handler.get_anim_duration() != 0) { movement.x /= 1000; movement.y /= 1000; }
 
     if (fabs(movement.x) < EPS && fabs(movement.y) < EPS) {
         animation_handler.changeAnim(0);
     } else {
-        animation_handler.changeAnim(1);
+        if (presenter.check_input_shift()) animation_handler.changeAnim(3);
+        else animation_handler.changeAnim(1);
 
         if (movement.x == 0 || movement.y == 0) { movement.x *= 0.707f; movement.y *= 0.707f; }
         
