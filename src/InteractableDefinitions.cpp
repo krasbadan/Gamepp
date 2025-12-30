@@ -1,7 +1,10 @@
 #include "dialogue.hpp"
+#include "str_format.hpp"
 
+#include "Map.hpp"
 #include "MapResource.hpp"
 #include "NPC.hpp"
+#include "World.hpp"
 
 
 
@@ -16,10 +19,12 @@ Dialogue* BirchTree::interact() {
                     return nullptr;
                 }),
                 DialogueOption(L"Можно чуть-чуть попробовать? (1 литр)", [this]() -> Dialogue* {
+                    worldptr->player_economy->resources["birch_juice"] += 1;
                     amount -= 1;
                     return next_dial();
                 }),
                 DialogueOption(L"Я возьму всё!", [this]() -> Dialogue* {
+                    worldptr->player_economy->resources["birch_juice"] += amount;
                     amount = 0;
                     return nullptr;
                 }),
@@ -46,10 +51,12 @@ Dialogue* BirchTree::next_dial() {
                     return nullptr;
                 }),
                 DialogueOption(L"Можно ещё чуть-чуть? (1 литр)", [this]() -> Dialogue* {
+                    worldptr->player_economy->resources["birch_juice"] += 1;
                     amount -= 1;
                     return next_dial();
                 }),
                 DialogueOption(L"Я возьму всё!", [this]() -> Dialogue* {
+                    worldptr->player_economy->resources["birch_juice"] += amount;
                     amount = 0;
                     return nullptr;
                 }),

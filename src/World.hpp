@@ -2,6 +2,7 @@
 
 #include "sequence.hpp"
 
+#include "Economy.hpp"
 #include "Player.hpp"
 #include "Time.hpp"
 #include "Utils.hpp"
@@ -22,6 +23,7 @@ public:
     Sequence<NPC*> npcs;
     Sequence<Interactable*> interactables;
     Time time;
+    Economy* player_economy;
     
 	World(int _width, int _height);
     ~World();

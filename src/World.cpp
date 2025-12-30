@@ -133,11 +133,8 @@ World::World(int _width, int _height):
     for (int y=0; y<height; ++y) {
         tiles[y] = new Tile[width];
         for (int x=0; x<height; ++x) {
-            if (x == 1 && y == road_y + 1) {
-                tiles[y][x] = Tile(this, 5);
-            }
-            else if (x == 10 && y > road_y && y < road_y + 10) {
-                tiles[y][x] = Tile(this, 5);
+            if ((x == 10 && y > road_y && y < road_y + 10) || (x == 1 && y == road_y + 1)) {
+                tiles[y][x] = Tile(this, 6);
             }
             else if (abs(y - road_y) < road_width/2) {
                 tiles[y][x] = Tile(this, 3);
@@ -151,18 +148,22 @@ World::World(int _width, int _height):
         }
     }
     
-    spawn_map_resource(new BirchTree(this, {4, road_y + 10}, "Wood", 50, 8));
-    spawn_map_resource(new BirchTree(this, {7, road_y + 13}, "Wood", 50, 8));
-    spawn_map_resource(new BirchTree(this, {10, road_y + 14}, "Wood", 50, 8));
-    spawn_map_resource(new BirchTree(this, {4, road_y + 15}, "Wood", 50, 8));
+    spawn_map_resource(new BirchTree(this, {4, road_y + 10}, "birch_juice", 50, 8));
+    spawn_map_resource(new BirchTree(this, {7, road_y + 13}, "birch_juice", 50, 8));
+    spawn_map_resource(new BirchTree(this, {10, road_y + 14}, "birch_juice", 50, 8));
+    spawn_map_resource(new BirchTree(this, {4, road_y + 15}, "birch_juice", 50, 8));
     
-    spawn_map_resource(new BirchTree(this, {18, road_y + 15}, "Wood", 50, 8));
-    spawn_map_resource(new BirchTree(this, {17, road_y + 15}, "Wood", 10, 3));
-    spawn_map_resource(new BirchTree(this, {18, road_y + 14}, "Wood", 10, 3));
-    spawn_map_resource(new BirchTree(this, {19, road_y + 15}, "Wood", 10, 3));
-    spawn_map_resource(new BirchTree(this, {18, road_y + 16}, "Wood", 10, 3));
+    spawn_map_resource(new BirchTree(this, {18, road_y + 15}, "birch_juice", 50, 8));
+    spawn_map_resource(new BirchTree(this, {17, road_y + 15}, "birch_juice", 10, 3));
+    spawn_map_resource(new BirchTree(this, {18, road_y + 14}, "birch_juice", 10, 3));
+    spawn_map_resource(new BirchTree(this, {19, road_y + 15}, "birch_juice", 10, 3));
+    spawn_map_resource(new BirchTree(this, {18, road_y + 16}, "birch_juice", 10, 3));
 
     spawn_building(new Campfire(this, {5, 250}));
+    
+    
+    
+    player_economy = new Economy;
 }
 
 World::~World() {
@@ -174,6 +175,8 @@ World::~World() {
     for (int i=0; i<map_objects.get_size(); ++i) {
         delete map_objects[i];
     }
+    
+    //delete player_economy;
 }
 
 void World::update(float deltaTime) {

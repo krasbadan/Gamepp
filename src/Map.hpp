@@ -45,18 +45,34 @@ public:
             return *this;
         }
     };
+    
+    ~Map() {
+        Node* prev = nullptr;
+        Node* curr = root;
+        while (curr != nullptr) {
+            if (curr->left != nullptr)
+                curr = curr->left;
+            else if (curr->right != nullptr)
+                curr = curr->right;
+            else {
+                prev = curr->parent;
+                delete curr;
+                curr = prev;
+            }
+        }
+    }
 
-    iterator begin() {
+    iterator begin() const {
         Node* curr = root;
         while (curr && curr->left) curr = curr->left;
         return iterator(curr);
     }
 
-    iterator end() {
+    iterator end() const {
         return iterator(nullptr);
     }
 
-    iterator find(const Key& key) {
+    iterator find(const Key& key) const {
         Node* curr = root;
         while (curr != nullptr) {
             if (key == curr->kv.first) {

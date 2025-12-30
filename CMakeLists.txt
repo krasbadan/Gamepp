@@ -15,10 +15,12 @@ add_executable(main)
 target_sources(main
   PRIVATE
     "src/dialogue.cpp"
+    "src/str_format.cpp"
     
     "src/AnimationHandler.cpp"
     "src/Building.cpp"
     "src/Character.cpp"
+    "src/Economy.cpp"
     "src/FontManager.cpp"
     "src/Interactable.cpp"
     "src/InteractableDefinitions.cpp"

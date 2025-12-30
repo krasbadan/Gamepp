@@ -2,6 +2,7 @@
 
 #include "SFML/Graphics.hpp"
 
+#include "Economy.hpp"
 #include "FontManager.hpp"
 #include "Player.hpp"
 #include "World.hpp"
@@ -25,6 +26,8 @@ void Presenter::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     sf_text.setOutlineThickness(-0.05f*font_size);
     sf_text.setPosition({margin, margin});
     target.draw(sf_text, states);
+    
+    target.draw(*player->worldptr->player_economy, states);
 }
 
 Presenter::Presenter(Player* _player):

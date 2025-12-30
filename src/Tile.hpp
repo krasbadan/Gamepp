@@ -28,7 +28,7 @@ const TileType tile_types[n_tile_types] = {
 	{"Assets/Sprites/Tiles/road.png", true},
 	{"Assets/Sprites/Tiles/sand.png", true},
 	{"Assets/Sprites/Tiles/cliff.png", false},
-	{"Assets/Sprites/Tiles/water.png", true},
+	{"Assets/Sprites/Tiles/water.png", false},
 };
 
 struct Tile {
