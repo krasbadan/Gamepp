@@ -51,7 +51,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             tiles[y][x].sprite.setPosition({(float)x, (float)y});
             target.draw(tiles[y][x].sprite, tileStates);
             
-            if (tiles[y][x].map_object != nullptr) {
+            /*if (tiles[y][x].map_object != nullptr) {
                 MapObject* obj = tiles[y][x].map_object;
                 sf::Vector2f logicPos = {(float)x, (float)y};
                 sf::Vector2f isoPos = isoMatrix.transformPoint(logicPos);
@@ -61,10 +61,10 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 // (x, y) is the coords of the on-screen top corner of the tile.
                 // (x+0.5, y+0.5) is the coords of the tile center, which is 1.f further at z. 
                 draw_order.push_back({obj, objStates, (float)(x+y)+1.f});
-            }
+            }*/
         }
     }
-
+    
     sf::Vector2f playerLogicPos = player.getPosition();
     sf::Vector2f playerIsoPos = isoMatrix.transformPoint(playerLogicPos);
 
@@ -74,6 +74,19 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     playerStates.transform.translate(-playerLogicPos);
     
     draw_order.push_back({&player, playerStates, playerLogicPos.x + playerLogicPos.y});
+    
+    for (MapObject* obj : map_objects) {
+        sf::Vector2f logicPos = static_cast<sf::Vector2f>(obj->get_pos());
+        if ((logicPos - playerLogicPos).length() < radius + 1.2f*obj->get_ingame_height()) {
+            sf::Vector2f isoPos = isoMatrix.transformPoint(logicPos);
+            sf::RenderStates objStates = states;
+            objStates.transform.translate(isoPos);
+            
+            // (x, y) is the coords of the on-screen top corner of the tile.
+            // (x+0.5, y+0.5) is the coords of the tile center, which is 1.f further at z. 
+            draw_order.push_back({obj, objStates, (float)(logicPos.x + logicPos.y) + 1.f});
+        }
+    }
     
     
     

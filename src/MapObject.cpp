@@ -27,6 +27,10 @@ sf::Vector2i MapObject::get_pos() const {
     return pos;
 }
 
+float MapObject::get_ingame_height() const {
+    return ingame_height;
+}
+
 MapObject::MapObject(World* _worldptr, const sf::Texture& texture, sf::Vector2i _pos, float _ingame_height): 
     worldptr(_worldptr), sprite(texture), pos(_pos), ingame_height(_ingame_height),
     tile(&_worldptr->tiles[_pos.y][_pos.x]) 

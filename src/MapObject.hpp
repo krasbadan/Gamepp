@@ -21,6 +21,7 @@ public:
     
     sf::Vector2f get_central_point() const;
     sf::Vector2i get_pos() const;
+    float get_ingame_height() const;
     
     MapObject(World* _worldptr, const sf::Texture& texture, sf::Vector2i pos, float ingame_height = 2.f);
     
