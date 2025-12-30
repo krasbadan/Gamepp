@@ -1,6 +1,8 @@
 #include "Player.hpp"
 
 #include <iostream>
+#include <random>
+#include "Utils.hpp"
 
 
 Player::Player(
@@ -12,11 +14,12 @@ Player::Player(
     presenter(this)
 {
     Animation idle(0, 7, 0.15f); animation_handler.addAnim(idle);
-    Animation jump(0, 7, 0.1f); animation_handler.addAnim(jump);
+    Animation run(0, 7, 0.1f); animation_handler.addAnim(run);
+    Animation jump(0, 1, 0.15f); animation_handler.addAnim(jump);
     Animation fall(0, 1, 0.15f); animation_handler.addAnim(fall);
-    Animation attack1(0, 3, 0.15f); animation_handler.addAnim(attack1);
-    Animation attack2(0, 3, 0.15f); animation_handler.addAnim(attack2);
-    Animation attack3(0, 3, 0.15f); animation_handler.addAnim(attack3);
+    Animation attack1(0, 3, 0.1f); animation_handler.addAnim(attack1);
+    Animation attack2(0, 3, 0.1f); animation_handler.addAnim(attack2);
+    Animation attack3(0, 3, 0.1f); animation_handler.addAnim(attack3);
     Animation ouch(0, 3, 0.15f); animation_handler.addAnim(ouch);
     Animation ouch_white_silhouette(0, 7, 0.15f); animation_handler.addAnim(ouch_white_silhouette);
     Animation death(0, 5, 0.15f); animation_handler.addAnim(death);
@@ -38,6 +41,7 @@ void Player::update(float deltaTime) {
     if (presenter.check_input_move_down()) { movement.x += s; movement.y += s; }
     if (presenter.check_input_move_left()) { movement.x -= s; movement.y += s; }
     if (presenter.check_input_move_right()) { movement.x += s; movement.y -= s; }
+    if (animation_handler.get_anim_duration() != 0) { movement.x /= 1000; movement.y /= 1000; }
 
     if (fabs(movement.x) < EPS && fabs(movement.y) < EPS) {
         animation_handler.changeAnim(0);
@@ -55,6 +59,11 @@ void Player::update(float deltaTime) {
         if      (can_move(getPosition() + movement))                      move(movement);
         else if (can_move(getPosition() + sf::Vector2f({movement.x, 0}))) move(sf::Vector2f({movement.x, 0}));
         else if (can_move(getPosition() + sf::Vector2f({0, movement.y}))) move(sf::Vector2f({0, movement.y}));
+    }
+
+    if (presenter.check_input_space()) {
+        //animation_handler.breakAnim();
+        animation_handler.playAnim(4 + std::rand()%3);
     }
 
     animation_handler.update(deltaTime);

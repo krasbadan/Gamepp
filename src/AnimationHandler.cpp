@@ -6,10 +6,10 @@
 
 void AnimationHandler::update(const float dt) {
     if(currentAnim >= this->animations.get_size() || currentAnim < 0) return;
-    float duration = this->animations[currentAnim].duration;
+    float frame_duration = this->animations[currentAnim].frame_duration;
 
-    if(int((t + dt) / duration) > int(t / duration)) {
-        int frame = int((t + dt) / duration);
+    if(int((t + dt) / frame_duration) > int(t / frame_duration)) {
+        int frame = int((t + dt) / frame_duration);
         frame %= this->animations[currentAnim].getLength();
  
         sf::IntRect rect = this->frameSize;
@@ -19,8 +19,9 @@ void AnimationHandler::update(const float dt) {
         this->bounds = rect;
     }
  
-    this->t += dt;
-    if(this->t > duration * this->animations[currentAnim].getLength()) this->t = 0.0f;
+    this->t += dt; anim_duration -= dt;
+    if (this->t > frame_duration * this->animations[currentAnim].getLength()) this->t = 0.0f;
+    if (anim_duration < 0) anim_duration = 0;
     
     return;
 }
@@ -31,7 +32,20 @@ void AnimationHandler::addAnim(const Animation& anim) {
     return;
 }
 
+void AnimationHandler::playAnim(unsigned animID) {
+    if(anim_duration != 0) return;
+    changeAnim(animID);
+    anim_duration = animations[currentAnim].getDuration();
+    return;
+}
+
+void AnimationHandler::breakAnim() {
+    anim_duration = 0;
+    return;
+}
+
 void AnimationHandler::changeAnim(unsigned int animID) {
+    if(anim_duration != 0) return;
     if(this->currentAnim == animID || animID >= this->animations.get_size() || animID < 0) return;
 
     this->currentAnim = animID;

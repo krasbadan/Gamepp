@@ -9,13 +9,14 @@
 struct Animation {
     unsigned int startFrame;
     unsigned int endFrame;
-    float duration;
+    float frame_duration;
 
-    Animation(unsigned int _startFrame, unsigned int _endFrame, float _duration):
-        startFrame(_startFrame), endFrame(_endFrame), duration(_duration)
+    Animation(unsigned int _startFrame, unsigned int _endFrame, float _frame_duration):
+        startFrame(_startFrame), endFrame(_endFrame), frame_duration(_frame_duration)
     {}
 
     unsigned int getLength() { return endFrame - startFrame + 1; }
+    float getDuration() { return getLength() * frame_duration; }
 };
 
 class AnimationHandler {
@@ -23,11 +24,15 @@ private:
     Sequence<Animation> animations;
     float t;
     int currentAnim;
+    float anim_duration = 0;
 
 public:
+    float get_anim_duration() {return anim_duration;}
     void addAnim(const Animation& anim);
     void update(const float dt);
-    void changeAnim(unsigned int animNum);
+    void playAnim(unsigned animID);
+    void breakAnim();
+    void changeAnim(unsigned animID);
     int count_animations() const;
     sf::IntRect bounds;
     sf::IntRect frameSize;
