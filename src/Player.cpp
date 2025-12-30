@@ -28,11 +28,12 @@ void Player::update(float deltaTime) {
     sf::Vector2f movement{0.f, 0.f};
     float s = speed * deltaTime;
     bool was_flipped = is_flipped;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W)) { movement.x -= s; movement.y -= s; }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S)) { movement.x += s; movement.y += s; }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A)) { movement.x -= s; movement.y += s; }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D)) { movement.x += s; movement.y -= s; }
+    
+    
+    if (presenter.check_input_move_up()) { movement.x -= s; movement.y -= s; }
+    if (presenter.check_input_move_down()) { movement.x += s; movement.y += s; }
+    if (presenter.check_input_move_left()) { movement.x -= s; movement.y += s; }
+    if (presenter.check_input_move_right()) { movement.x += s; movement.y -= s; }
 
     if (fabs(movement.x) < EPS && fabs(movement.y) < EPS) {
         animation_handler.changeAnim(0);

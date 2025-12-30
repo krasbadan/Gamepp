@@ -30,5 +30,10 @@ public:
     Interactable** available_interactables;
     
     Presenter();
+    
+    bool check_input_move_up();
+    bool check_input_move_down();
+    bool check_input_move_left();
+    bool check_input_move_right();
 };
 
