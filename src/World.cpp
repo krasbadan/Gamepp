@@ -83,9 +83,9 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (CurrentDrawable& a : draw_order) {
         target.draw(*a.drawable, a.states);
     }
-    
-    
-    
+
+
+
     for (Interactable* inter : interactables) {
         sf::Vector2f iLogicPos = inter->get_interact_pos();
         
