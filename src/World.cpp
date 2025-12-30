@@ -14,7 +14,7 @@
 #include "TextureManager.hpp"
 #include "Tile.hpp"
 #include "MapObject.hpp"
-
+#include "Campfire.hpp"
 
 
 struct CurrentDrawable {
@@ -86,7 +86,6 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     
     
     
-    int ai = 0;
     for (Interactable* inter : interactables) {
         sf::Vector2f iLogicPos = inter->get_interact_pos();
         
@@ -149,6 +148,8 @@ World::World(int _width, int _height):
     spawn_map_resource(new BirchTree(this, {18, road_y + 14}, "Wood", 10, 3));
     spawn_map_resource(new BirchTree(this, {19, road_y + 15}, "Wood", 10, 3));
     spawn_map_resource(new BirchTree(this, {18, road_y + 16}, "Wood", 10, 3));
+
+    spawn_building(new Campfire(this, {5, 250}));
 }
 
 World::~World() {
@@ -174,6 +175,7 @@ void World::spawn_building(Building* building) {
     map_objects.push_back(building);
     
     sf::Vector2i pos = building->get_pos();
+    std::cout << pos.x << " " << pos.y << std::endl;
     tiles[pos.y][pos.x].map_object = building;
     tiles[pos.y][pos.x].is_passable = false;
 }

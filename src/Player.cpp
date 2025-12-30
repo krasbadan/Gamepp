@@ -60,5 +60,7 @@ void Player::update(float deltaTime) {
     animation_handler.update(deltaTime);
     sprite.setTextureRect(animation_handler.bounds);
 
+    //std::cout << getPosition().x << " " << getPosition().y << std::endl;
+
     return;
 }

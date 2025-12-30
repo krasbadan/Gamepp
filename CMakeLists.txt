@@ -32,6 +32,7 @@ target_sources(main
     "src/Time.cpp"
     "src/Utils.cpp"
     "src/World.cpp"
+    "src/Campfire.cpp"
     
     "src/main.cpp"
 )
