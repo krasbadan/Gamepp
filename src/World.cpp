@@ -166,6 +166,10 @@ World::~World() {
 void World::update(float deltaTime) {
     player.update(deltaTime);
     
+    for (MapObject* x : map_objects) {
+        x->update(deltaTime);
+    }
+    
     time += deltaTime;
 }
 
@@ -175,7 +179,6 @@ void World::spawn_building(Building* building) {
     map_objects.push_back(building);
     
     sf::Vector2i pos = building->get_pos();
-    std::cout << pos.x << " " << pos.y << std::endl;
     tiles[pos.y][pos.x].map_object = building;
     tiles[pos.y][pos.x].is_passable = false;
 }

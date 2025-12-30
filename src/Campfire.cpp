@@ -1,5 +1,9 @@
 #include "Campfire.hpp"
 
+#include <iostream>
+
+
+
 Campfire::Campfire(World* _worldptr, sf::Vector2i pos, float _ingame_height):
                    Building(_worldptr, Tx["Assets/Sprites/MapObjects/campfire_burning.png"], pos, _ingame_height) 
 {
@@ -15,6 +19,4 @@ Campfire::Campfire(World* _worldptr, sf::Vector2i pos, float _ingame_height):
 void Campfire::update(float deltaTime) {
     animation_handler.update(deltaTime);
     sprite.setTextureRect(animation_handler.bounds);
-
-    return;
 }
