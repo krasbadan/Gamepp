@@ -37,6 +37,7 @@ public:
     bool check_input_move_down();
     bool check_input_move_left();
     bool check_input_move_right();
+    bool check_input_space();
     
     void update_presentation();
 };
