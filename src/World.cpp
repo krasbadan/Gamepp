@@ -77,7 +77,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     
     for (MapObject* obj : map_objects) {
         sf::Vector2f logicPos = static_cast<sf::Vector2f>(obj->get_pos());
-        if ((logicPos - playerLogicPos).length() < radius + 1.2f*obj->get_ingame_height()) {
+        if ((logicPos - playerLogicPos).length() < 1.5f*(radius + obj->get_ingame_height())) {
             sf::Vector2f isoPos = isoMatrix.transformPoint(logicPos);
             sf::RenderStates objStates = states;
             objStates.transform.translate(isoPos);
