@@ -102,6 +102,8 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             if (ai < player.presenter.n_E_like_keys) {
                 inter->key_name = player.presenter.E_like_names[ai];
                 player.presenter.available_interactables[ai++] = inter;
+            } else {
+                inter->key_name = nullptr;
             }
         }
     }

@@ -5,6 +5,9 @@
 
 
 void Interactable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    if (key_name == nullptr)
+        return;
+    
     float rect_size = 0.5f;
     float font_size = 0.75f*rect_size;
     int font_antialias_k = 100;

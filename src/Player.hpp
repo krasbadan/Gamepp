@@ -12,7 +12,6 @@ class Player : public Character {
     float speed = 6.0f;
 public:
     Presenter presenter;
-    Dialogue* active_dialogue;
     
     Player(const Presenter& _presenter, World* _worldptr, sf::Vector2f pos,
            const sf::Texture& texture = Tx["Assets/Sprites/KingAnimated/FullAnimation.png"],

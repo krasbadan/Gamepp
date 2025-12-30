@@ -25,6 +25,8 @@ public:
     const sf::Keyboard::Scancode* E_like_scancodes;
     const char* const* const E_like_names;
     
+    Dialogue* active_dialogue;
+    
     Interactable** available_interactables;
     
     Presenter();

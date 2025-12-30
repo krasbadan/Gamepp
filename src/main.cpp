@@ -69,9 +69,9 @@ int main() {
         
         switch (event.scancode) {
             case sf::Keyboard::Scancode::Escape:
-                ad = world.player.active_dialogue;
+                ad = presenter.active_dialogue;
                 if (ad == nullptr) {
-                    world.player.active_dialogue = new Dialogue(
+                    presenter.active_dialogue = new Dialogue(
                         window_interactable,
                         L"Выйти из игры?",
                         2,
@@ -87,38 +87,39 @@ int main() {
                     );
                 } else {
                     delete ad;
-                    world.player.active_dialogue = nullptr;
+                    presenter.active_dialogue = nullptr;
                 }
                 break;
             case sf::Keyboard::Scancode::Up:
-                ad = world.player.active_dialogue;
+                ad = presenter.active_dialogue;
                 if (ad != nullptr && ad->get_n_options() != 0) {
                     ad->set_active_option(mod(ad->get_active_option() - 1, ad->get_n_options()));
                 }
                 break;
             case sf::Keyboard::Scancode::Down:
-                ad = world.player.active_dialogue;
+                ad = presenter.active_dialogue;
                 if (ad != nullptr && ad->get_n_options() != 0) {
                     ad->set_active_option(mod(ad->get_active_option() + 1, ad->get_n_options()));
                 }
                 break;
             case sf::Keyboard::Scancode::Enter:
-                ad = world.player.active_dialogue;
+                ad = presenter.active_dialogue;
                 if (ad != nullptr) {
                     if (ad->get_n_options() == 0) {
                         delete ad;
-                        world.player.active_dialogue = nullptr;
+                        presenter.active_dialogue = nullptr;
                     } else {
                         Dialogue* new_dial = ad->choose_active_option();
                         delete ad;
-                        world.player.active_dialogue = new_dial;
+                        presenter.active_dialogue = new_dial;
                     }
                 }
                 break;
             default:
                 for (int ai = 0; ai < presenter.n_E_like_keys; ++ai) {
                     if (event.scancode == presenter.E_like_scancodes[ai] && presenter.available_interactables[ai] != nullptr) {
-                        world.player.active_dialogue = presenter.available_interactables[ai]->interact();
+                        delete presenter.active_dialogue;
+                        presenter.active_dialogue = presenter.available_interactables[ai]->interact();
                         break;
                     }
                 }
@@ -155,8 +156,8 @@ int main() {
             window.draw(world);
             
             window.setView(sf::View(sf::FloatRect({0.f, 0.f}, sf::Vector2f(window.getSize()))));
-            if (world.player.active_dialogue != nullptr) {
-                window.draw(*world.player.active_dialogue);
+            if (presenter.active_dialogue != nullptr) {
+                window.draw(*presenter.active_dialogue);
             }
         }
         window.display();

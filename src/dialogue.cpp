@@ -88,13 +88,17 @@ void Dialogue::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 Dialogue::Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
     interactable(_interactable), text(_text), n_options(_n_options), active_option(0)
 {
-    options = new DialogueOption[_n_options];
-    int i = 0;
-    for (DialogueOption x : list) {
-        options[i] = x;
-        ++i;
+    if (n_options == 0) {
+        options = nullptr;
+    } else {
+        options = new DialogueOption[_n_options];
+        int i = 0;
+        for (DialogueOption x : list) {
+            options[i] = x;
+            ++i;
+        }
+        options[0].is_active = true;
     }
-    options[0].is_active = true;
 }
 Dialogue::~Dialogue() {
     delete[] options;
