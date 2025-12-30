@@ -59,6 +59,9 @@ bool Presenter::check_input_move_right() {
 bool Presenter::check_input_space() {
     return sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space);
 }
+bool Presenter::check_input_shift() {
+    return sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RShift);
+}
 
 void Presenter::update_presentation() {
     for (int ai = 0; ai < n_E_like_keys; ++ai) {
