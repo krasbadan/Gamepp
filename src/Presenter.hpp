@@ -26,12 +26,13 @@ public:
     const sf::Keyboard::Scancode* E_like_scancodes;
     const char* const* const E_like_names;
     
+    Interactable* window_interactable;
     Player* const player;
     Dialogue* active_dialogue;
     
     Interactable** available_interactables;
     
-    Presenter(Player* _player);
+    Presenter(Interactable* window_interactable, Player* _player);
     
     bool check_input_move_up();
     bool check_input_move_down();

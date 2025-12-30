@@ -30,11 +30,12 @@ void Presenter::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(*player->worldptr->player_economy, states);
 }
 
-Presenter::Presenter(Player* _player):
+Presenter::Presenter(Interactable* window_interactable, Player* _player):
     n_E_like_keys(default_n_E_like_keys),
     E_like_scancodes(default_E_like_scancodes),
     E_like_names(default_E_like_names),
     
+    window_interactable(window_interactable),
     player(_player),
     active_dialogue(nullptr)
 {

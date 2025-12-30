@@ -25,7 +25,7 @@ public:
     Time time;
     Economy* player_economy;
     
-	World(int _width, int _height);
+	World(Interactable* window_interactable, int _width, int _height);
     ~World();
 	
 	void update(float deltaTime);

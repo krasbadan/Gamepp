@@ -56,7 +56,7 @@ int main() {
     
     Interactable* window_interactable = new WindowInteractable();
     
-    World world(500, 500);
+    World world(window_interactable, 500, 500);
     Presenter& presenter = world.player.presenter;
     
     

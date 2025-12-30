@@ -1,5 +1,9 @@
 #pragma once
+
+#include <iostream>
 #include <utility>
+
+
 
 template<typename Key, typename Value>
 class Map {
@@ -50,11 +54,15 @@ public:
         Node* prev = nullptr;
         Node* curr = root;
         while (curr != nullptr) {
-            if (curr->left != nullptr)
+            if (curr->left != nullptr) {
+                prev = curr;
                 curr = curr->left;
-            else if (curr->right != nullptr)
+                prev->left = nullptr;
+            } else if (curr->right != nullptr) {
+                prev = curr;
                 curr = curr->right;
-            else {
+                prev->right = nullptr;
+            } else {
                 prev = curr->parent;
                 delete curr;
                 curr = prev;
@@ -139,7 +147,7 @@ private:
     void FixInsert(Node* k) {
         while (k->parent && k->parent->red) {
             if (k->parent == k->parent->parent->right) {
-                Node* u = k->parent->parent->left; // Дядя
+                Node* u = k->parent->parent->left; // Uncle
                 if (u && u->red) {
                     u->red = false;
                     k->parent->red = false;
@@ -155,7 +163,7 @@ private:
                     leftRotation(k->parent->parent);
                 }
             } else {
-                Node* u = k->parent->parent->right; // Дядя
+                Node* u = k->parent->parent->right; // Uncle
                 if (u && u->red) {
                     u->red = false;
                     k->parent->red = false;

@@ -52,7 +52,7 @@ wchar_t* wstr_format(wchar_t* _format, const wchar_t* arg_str) {
             }
         }
     }
-    delete _format;
+    delete[] _format;
     if (o_i >= FORMAT_BUFFER_SIZE)
         throw FormatError("Format buffer overflow");
     out[o_i] = '\0';
@@ -60,10 +60,14 @@ wchar_t* wstr_format(wchar_t* _format, const wchar_t* arg_str) {
 }
 
 wchar_t* wstr_format(const wchar_t* _format, wchar_t* arg_str) {
-    return wstr_format(_format, const_cast<const wchar_t*>(arg_str));
+    wchar_t* out = wstr_format(_format, const_cast<const wchar_t*>(arg_str));
+    //delete[] arg_str;
+    return out;
 }
 wchar_t* wstr_format(wchar_t* _format, wchar_t* arg_str) {
-    return wstr_format(_format, const_cast<const wchar_t*>(arg_str));
+    wchar_t* out = wstr_format(_format, const_cast<const wchar_t*>(arg_str));
+    //delete[] arg_str;
+    return out;
 }
 
 wchar_t* wstr_format(const wchar_t* _format, int arg) {

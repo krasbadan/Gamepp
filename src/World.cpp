@@ -122,8 +122,8 @@ sf::Vector2f World::get_iso_pos(sf::Vector2f logicPos) {
     return isoMatrix.transformPoint(logicPos);
 }
 
-World::World(int _width, int _height):
-    player(this, sf::Vector2f(0, _height/2)),
+World::World(Interactable* window_interactable, int _width, int _height):
+    player(window_interactable, this, sf::Vector2f(0, _height/2)),
     width(_width), height(_height),
     map_objects()
 {
@@ -176,7 +176,7 @@ World::~World() {
         delete map_objects[i];
     }
     
-    //delete player_economy;
+    delete player_economy;
 }
 
 void World::update(float deltaTime) {
