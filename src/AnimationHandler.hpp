@@ -1,7 +1,10 @@
 #pragma once
  
 #include <SFML/Graphics.hpp>
+
 #include "sequence.hpp"
+
+
  
 class Animation {
 public:

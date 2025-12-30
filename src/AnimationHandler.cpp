@@ -1,7 +1,9 @@
-#include <SFML/Graphics.hpp>
- 
 #include "AnimationHandler.hpp"
- 
+
+#include <SFML/Graphics.hpp>
+
+
+
 void AnimationHandler::update(const float dt) {
     if(currentAnim >= this->animations.get_size() || currentAnim < 0) return;
     float duration = this->animations[currentAnim].duration;

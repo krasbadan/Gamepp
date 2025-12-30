@@ -6,7 +6,6 @@
 
 class MapObject : public sf::Drawable, public sf::Transformable {
 protected:
-    World* worldptr;
     Tile* tile;
     sf::Vector2i pos;
     sf::Sprite sprite;
@@ -18,6 +17,8 @@ protected:
     sf::Vector2f get_bottom_point() const;
 
 public:
+    World* const worldptr;
+    
     sf::Vector2f get_central_point() const;
     sf::Vector2i get_pos() const;
     

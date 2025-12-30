@@ -7,7 +7,6 @@
 
 class Character : public sf::Drawable, public sf::Transformable {
 protected:
-    World* worldptr;
     float speed;
 	float ingame_height;
     int hp_max, hp;
@@ -18,11 +17,17 @@ protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     sf::Vector2f get_bottom_point() const;
-
+    
 public:
+    World* const worldptr;
+    
     sf::Vector2f get_central_point() const;
 
-    Character(World* _worldptr, const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f anim_origin, float _ingame_height, int _hp_max = 100);
+    Character(
+        World* _worldptr, sf::Vector2f pos,
+        const sf::Texture& texture, sf::Vector2i anim_frame_size, sf::Vector2f anim_origin,
+        float _ingame_height, int _hp_max = 100
+    );
 
     bool can_move(sf::Vector2f vec);
 

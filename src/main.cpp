@@ -56,8 +56,8 @@ int main() {
     
     Interactable* window_interactable = new WindowInteractable();
     
-    Presenter presenter;
-    World world(presenter, 500, 500);
+    World world(500, 500);
+    Presenter& presenter = world.player.presenter;
     
     
     
@@ -149,6 +149,8 @@ int main() {
         world.update(deltaTime);
         
         if (window_focus) {
+            presenter.update_presentation();
+            
             window.clear(sf::Color {0, 100, 20});
             
             view.setCenter(World::get_iso_pos(world.player.getPosition() - sf::Vector2f(1, 1)/1.5));

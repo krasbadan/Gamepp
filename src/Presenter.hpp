@@ -25,15 +25,18 @@ public:
     const sf::Keyboard::Scancode* E_like_scancodes;
     const char* const* const E_like_names;
     
+    Player* const player;
     Dialogue* active_dialogue;
     
     Interactable** available_interactables;
     
-    Presenter();
+    Presenter(Player* _player);
     
     bool check_input_move_up();
     bool check_input_move_down();
     bool check_input_move_left();
     bool check_input_move_right();
+    
+    void update_presentation();
 };
 

@@ -76,6 +76,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     
     
     
+    // Draw all z-sorted objects
     draw_order.sort([](const CurrentDrawable& a, const CurrentDrawable& b) -> bool {return a.z < b.z;});
     
     for (CurrentDrawable& a : draw_order) {
@@ -83,10 +84,6 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     }
     
     
-    
-    for (int ai = 0; ai < player.presenter.n_E_like_keys; ++ai) {
-        player.presenter.available_interactables[ai] = nullptr;
-    }
     
     int ai = 0;
     for (Interactable* inter : interactables) {
@@ -98,13 +95,6 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             iStates.transform.translate(iIsoPos);
             iStates.transform.translate(-iLogicPos);
             target.draw(*inter, iStates);
-            
-            if (ai < player.presenter.n_E_like_keys) {
-                inter->key_name = player.presenter.E_like_names[ai];
-                player.presenter.available_interactables[ai++] = inter;
-            } else {
-                inter->key_name = nullptr;
-            }
         }
     }
 }
@@ -119,8 +109,8 @@ sf::Vector2f World::get_iso_pos(sf::Vector2f logicPos) {
     return isoMatrix.transformPoint(logicPos);
 }
 
-World::World(const Presenter& presenter, int _width, int _height):
-    player(presenter, this, sf::Vector2f(0, _height/2)),
+World::World(int _width, int _height):
+    player(this, sf::Vector2f(0, _height/2)),
     width(_width), height(_height),
     map_objects()
 {
