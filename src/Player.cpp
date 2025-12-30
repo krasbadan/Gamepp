@@ -77,7 +77,8 @@ void Player::update(float deltaTime) {
 
     //std::cout << getPosition().x << " " << getPosition().y << std::endl;
     
-    if (worldptr->player_economy->resources["birch_juice"] >= 290) {
+    if (worldptr->player_economy->resources["birch_juice"] >= 290 && !worldptr->story.birch_juice_ending) {
+        worldptr->story.birch_juice_ending = true;
         presenter.active_dialogue = new Dialogue(
             presenter.window_interactable,
             L"Вы собрали весь берёзовый сок в этом мире. Ваша жадность стала вашим концом.",

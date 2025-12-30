@@ -9,6 +9,12 @@
 
 
 
+
+
+struct StoryState {
+    bool birch_juice_ending = false;
+};
+
 class World: public sf::Drawable {
 	static const int road_width = 8;
     
@@ -24,6 +30,7 @@ public:
     Sequence<Interactable*> interactables;
     Time time;
     Economy* player_economy;
+    StoryState story;
     
 	World(Interactable* window_interactable, int _width, int _height);
     ~World();
