@@ -129,18 +129,18 @@ World::World(Interactable* window_interactable, int _width, int _height):
 {
     tiles = new Tile*[height];
     const int road_y = height/2;
-    const int mess_y = height*3/4;
+    const int mess_x = height*3/4;
     for (int y=0; y<height; ++y) {
         tiles[y] = new Tile[width];
         for (int x=0; x<height; ++x) {
             if ((x == 10 && y > road_y && y < road_y + 10) || (x == 1 && y == road_y + 1)) {
                 tiles[y][x] = Tile(this, 6);
             }
+            else if (abs(x - mess_x) < road_width/2) {
+                tiles[y][x] = Tile(this, (x*x*17+x*5+y*29+x*y+2)%7+0);
+            }
             else if (abs(y - road_y) < road_width/2) {
                 tiles[y][x] = Tile(this, 3);
-            }
-            else if (abs(y - mess_y) < road_width/2) {
-                tiles[y][x] = Tile(this, (x*x*17+x*5+y*29+x*y)%7+0);
             }
             else {
                 tiles[y][x] = Tile(this, 1);
@@ -155,9 +155,9 @@ World::World(Interactable* window_interactable, int _width, int _height):
     
     spawn_map_resource(new BirchTree(this, {18, road_y + 15}, "birch_juice", 50, 8));
     spawn_map_resource(new BirchTree(this, {17, road_y + 15}, "birch_juice", 10, 3));
-    spawn_map_resource(new BirchTree(this, {18, road_y + 14}, "birch_juice", 10, 3));
     spawn_map_resource(new BirchTree(this, {19, road_y + 15}, "birch_juice", 10, 3));
     spawn_map_resource(new BirchTree(this, {18, road_y + 16}, "birch_juice", 10, 3));
+    spawn_map_resource(new BirchTree(this, {490, road_y - 16}, "birch_juice", 10, 3));
 
     spawn_building(new Campfire(this, {5, 250}));
     

@@ -42,7 +42,7 @@ void update_view_size(const sf::RenderWindow& window, sf::View& view, const floa
 
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode({1080, 720}), "Game++");
+    sf::RenderWindow window(sf::VideoMode({1860, 1080}), "Game++");
     sf::Clock clock;
     
     window.setVerticalSyncEnabled(true);

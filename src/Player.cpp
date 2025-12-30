@@ -27,6 +27,7 @@ Player::Player(
     Animation ouch(0, 3, 0.15f); animation_handler.addAnim(ouch);
     Animation ouch_white_silhouette(0, 7, 0.15f); animation_handler.addAnim(ouch_white_silhouette);
     Animation death(0, 5, 0.15f); animation_handler.addAnim(death);
+    Animation dead(0, 1, 1.f); animation_handler.addAnim(dead);
     animation_handler.changeAnim(0);
     sprite.setTextureRect(animation_handler.bounds);
 
@@ -36,19 +37,26 @@ Player::Player(
 }
 
 void Player::update(float deltaTime) {
+    if (hp == 0) {
+        animation_handler.update(deltaTime);
+        animation_handler.changeAnim(10);
+        sprite.setTextureRect(animation_handler.bounds);
+        return;
+    }
+
     sf::Vector2f movement{0.f, 0.f};
     float s = speed * deltaTime;
     bool was_flipped = is_flipped;
     
     if (animation_handler.get_anim_duration() != 0) s /= 1000;
-    else if (presenter.check_input_shift()) s *= 4;
+    else if (presenter.check_input_shift()) s *= 5;
 
     if (presenter.check_input_move_up()) { movement.x -= s; movement.y -= s; }
     if (presenter.check_input_move_down()) { movement.x += s; movement.y += s; }
     if (presenter.check_input_move_left()) { movement.x -= s; movement.y += s; }
     if (presenter.check_input_move_right()) { movement.x += s; movement.y -= s; }
 
-    if (fabs(movement.x) < EPS && fabs(movement.y) < EPS) {
+    if (hp != 0 && fabs(movement.x) < EPS && fabs(movement.y) < EPS) {
         animation_handler.changeAnim(0);
     } else {
         if (presenter.check_input_shift()) animation_handler.changeAnim(3);
@@ -87,6 +95,7 @@ void Player::update(float deltaTime) {
                 DialogueOption(L"...", [this]() -> Dialogue* {
                     worldptr->player_economy->resources["birch_juice"] = -1000;
                     animation_handler.playAnim(9);
+                    hp = 0;
                     return nullptr;
                 }),
             }
