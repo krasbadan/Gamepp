@@ -6,13 +6,14 @@
 
 
  
-class Animation {
-public:
+struct Animation {
     unsigned int startFrame;
     unsigned int endFrame;
     float duration;
 
-    Animation(unsigned int _startFrame, unsigned int _endFrame, float _duration) : startFrame(_startFrame), endFrame(_endFrame), duration(_duration) {}
+    Animation(unsigned int _startFrame, unsigned int _endFrame, float _duration):
+        startFrame(_startFrame), endFrame(_endFrame), duration(_duration)
+    {}
 
     unsigned int getLength() { return endFrame - startFrame + 1; }
 };
@@ -26,7 +27,7 @@ private:
 public:
     void addAnim(const Animation& anim);
     void update(const float dt);
-    void changeAnim(unsigned int animNum); 
+    void changeAnim(unsigned int animNum);
     int count_animations() const;
     sf::IntRect bounds;
     sf::IntRect frameSize;

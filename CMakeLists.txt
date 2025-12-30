@@ -16,8 +16,6 @@ target_sources(main
   PRIVATE
     "src/dialogue.cpp"
     
-    "src/main.cpp"
-    
     "src/AnimationHandler.cpp"
     "src/Building.cpp"
     "src/Character.cpp"
@@ -33,6 +31,8 @@ target_sources(main
     "src/Tile.cpp"
     "src/Utils.cpp"
     "src/World.cpp"
+    
+    "src/main.cpp"
 )
 
 target_include_directories(main
