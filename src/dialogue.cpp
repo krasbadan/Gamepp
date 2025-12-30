@@ -1,10 +1,15 @@
 #include "dialogue.hpp"
 
+#include <cstring>
+
 #include "FontManager.hpp"
 
 
 
-DialogueOption::DialogueOption(): text(L""), func(), is_active(false) {}
+DialogueOption::DialogueOption(): func(), is_active(false) {
+    text = new wchar_t[1];
+    text[0] = L'\0';
+}
 
 float DialogueOption::calculate_margin(sf::Vector2f screen_size) {
     //return 0.01*std::min(screen_size.x, screen_size.y);
@@ -37,6 +42,13 @@ void DialogueOption::draw(sf::RenderTarget& target, sf::RenderStates states) con
 }
 
 DialogueOption::DialogueOption(const wchar_t* _text, std::function<Dialogue* ()> _func):
+    func(_func), is_active(false)
+{
+    int len = wcslen(_text)+1;
+    text = new wchar_t[len];
+    memcpy(text, _text, len*sizeof(wchar_t));
+}
+DialogueOption::DialogueOption(wchar_t* _text, std::function<Dialogue* ()> _func):
     text(_text), func(_func), is_active(false)
 {}
 
@@ -86,6 +98,25 @@ void Dialogue::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 Dialogue::Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
+    interactable(_interactable), n_options(_n_options), active_option(0)
+{
+    int len = wcslen(_text)+1;
+    text = new wchar_t[len];
+    memcpy(text, _text, len*sizeof(wchar_t));
+    
+    if (n_options == 0) {
+        options = nullptr;
+    } else {
+        options = new DialogueOption[_n_options];
+        int i = 0;
+        for (DialogueOption x : list) {
+            options[i] = x;
+            ++i;
+        }
+        options[0].is_active = true;
+    }
+}
+Dialogue::Dialogue(Interactable* _interactable, wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
     interactable(_interactable), text(_text), n_options(_n_options), active_option(0)
 {
     if (n_options == 0) {
@@ -101,6 +132,7 @@ Dialogue::Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_opt
     }
 }
 Dialogue::~Dialogue() {
+    delete text;
     delete[] options;
 }
 

@@ -6,6 +6,7 @@
 #include "sequence.hpp"
 
 #include "Building.hpp"
+#include "FontManager.hpp"
 #include "Interactable.hpp"
 #include "MapResource.hpp"
 #include "NPC.hpp"
@@ -163,6 +164,8 @@ World::~World() {
 
 void World::update(float deltaTime) {
     player.update(deltaTime);
+    
+    time += deltaTime;
 }
 
 

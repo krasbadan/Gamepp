@@ -2,10 +2,30 @@
 
 #include "SFML/Graphics.hpp"
 
+#include "FontManager.hpp"
 #include "Player.hpp"
 #include "World.hpp"
 
 
+
+void Presenter::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    sf::Vector2f screen_size = target.getView().getSize();
+    
+    if (active_dialogue != nullptr) {
+        target.draw(*active_dialogue);
+    }
+    
+    float margin = 0.02f*std::min(screen_size.x, screen_size.y);
+    float font_size = 2.f*margin;
+    
+    Time time = player->worldptr->time;
+    sf::Text sf_text(Fx["cambria.ttc"], wstr_format(wstr_format(L"{}:{}", time.days), (int)floor(time.seconds)), font_size);
+    sf_text.setFillColor({255, 255, 255});
+    sf_text.setOutlineColor({0, 0, 0});
+    sf_text.setOutlineThickness(-0.05f*font_size);
+    sf_text.setPosition({margin, margin});
+    target.draw(sf_text, states);
+}
 
 Presenter::Presenter(Player* _player):
     n_E_like_keys(default_n_E_like_keys),

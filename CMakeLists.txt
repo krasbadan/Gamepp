@@ -29,6 +29,7 @@ target_sources(main
     "src/Presenter.cpp"
     "src/TextureManager.cpp"
     "src/Tile.cpp"
+    "src/Time.cpp"
     "src/Utils.cpp"
     "src/World.cpp"
     

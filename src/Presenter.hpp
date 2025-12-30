@@ -19,7 +19,8 @@ const char* const default_E_like_names[default_n_E_like_keys] = {
     "H"
 };
 
-class Presenter {
+class Presenter: public sf::Drawable {
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 public:
     const int n_E_like_keys;
     const sf::Keyboard::Scancode* E_like_scancodes;

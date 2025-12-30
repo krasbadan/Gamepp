@@ -9,7 +9,7 @@ Dialogue* BirchTree::interact() {
     if (amount > 0) {
         return new Dialogue(
             this,
-            str_format(L"Хочешь берёзового сока? Есть {} литров.", amount),
+            wstr_format(L"Хочешь берёзового сока? Есть {} литров.", amount),
             3,
             {
                 DialogueOption(L"Спасибо, дорогая берёзка, пока не хочу...", []() -> Dialogue* {
@@ -39,7 +39,7 @@ Dialogue* BirchTree::next_dial() {
     if (amount > 0) {
         return new Dialogue(
             this,
-            str_format(L"Продолжай пить! Всё ещё остаётся {} литров.", amount),
+            wstr_format(L"Продолжай пить! Всё ещё остаётся {} литров.", amount),
             3,
             {
                 DialogueOption(L"Спасибо, дорогая берёзка, больше не хочу...", []() -> Dialogue* {

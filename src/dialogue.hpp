@@ -22,7 +22,7 @@ class Dialogue;
 class DialogueOption: public sf::Drawable {
     friend Dialogue;
     
-    const wchar_t* text;
+    wchar_t* text;
     std::function<Dialogue* ()> func;
     bool is_active;
     
@@ -36,6 +36,7 @@ class DialogueOption: public sf::Drawable {
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 public:
     DialogueOption(const wchar_t* _text, std::function<Dialogue* ()> _func);
+    DialogueOption(wchar_t* _text, std::function<Dialogue* ()> _func);
     
     Dialogue* operator()();
     
@@ -47,7 +48,7 @@ std::wostream& operator<<(std::wostream& os, const DialogueOption& self);
 
 
 class Dialogue: public sf::Drawable {
-    const wchar_t* text;
+    wchar_t* text;
     int n_options;
     int active_option;
     DialogueOption* options;
@@ -57,6 +58,7 @@ public:
     Interactable* interactable;
     
     Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list);
+    Dialogue(Interactable* _interactable, wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list);
     ~Dialogue();
     
     int get_n_options() const;

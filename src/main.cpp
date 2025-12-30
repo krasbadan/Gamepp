@@ -158,9 +158,7 @@ int main() {
             window.draw(world);
             
             window.setView(sf::View(sf::FloatRect({0.f, 0.f}, sf::Vector2f(window.getSize()))));
-            if (presenter.active_dialogue != nullptr) {
-                window.draw(*presenter.active_dialogue);
-            }
+            window.draw(presenter);
         }
         window.display();
     }

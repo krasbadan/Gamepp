@@ -3,6 +3,7 @@
 #include "sequence.hpp"
 
 #include "Player.hpp"
+#include "Time.hpp"
 #include "Utils.hpp"
 
 
@@ -20,6 +21,7 @@ public:
     Sequence<MapObject*> map_objects;
     Sequence<NPC*> npcs;
     Sequence<Interactable*> interactables;
+    Time time;
     
 	World(int _width, int _height);
     ~World();
