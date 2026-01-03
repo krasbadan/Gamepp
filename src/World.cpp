@@ -127,9 +127,13 @@ World::World(Interactable* window_interactable, int _width, int _height):
     width(_width), height(_height),
     map_objects()
 {
-    tiles = new Tile*[height];
     const int road_y = height/2;
     const int mess_x = height*3/4;
+    
+    
+    
+    tiles = new Tile*[height];
+    
     for (int y=0; y<height; ++y) {
         tiles[y] = new Tile[width];
         for (int x=0; x<height; ++x) {
@@ -147,6 +151,8 @@ World::World(Interactable* window_interactable, int _width, int _height):
             }
         }
     }
+    
+    
     
     spawn_map_resource(new BirchTree(this, {4, road_y + 10}, "birch_juice", 50, 8));
     spawn_map_resource(new BirchTree(this, {7, road_y + 13}, "birch_juice", 50, 8));
@@ -181,6 +187,10 @@ World::~World() {
 
 void World::update(float deltaTime) {
     player.update(deltaTime);
+    
+    for (MapObject* x : map_objects) {
+        x->update(deltaTime);
+    }
     
     time += deltaTime;
 }

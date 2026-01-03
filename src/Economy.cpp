@@ -20,7 +20,7 @@ void Economy::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     for (const std::pair<const std::string, int>& kv : resources) {
         const char* arg_str = kv.first.c_str();
         std::mbstowcs(arg_wstr, arg_str, std::strlen(arg_str)+1);
-        wchar_t* f_wstr = wstr_format(wstr_format(L"{}: {}; ", arg_wstr), kv.second);
+        wchar_t* f_wstr = wstr_format(wstr_format(L"{}: {}\n", arg_wstr), kv.second);
         while (*f_wstr != L'\0') {
             wstr[i++] = *(f_wstr++);
         }
