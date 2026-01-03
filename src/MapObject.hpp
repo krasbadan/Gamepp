@@ -23,7 +23,7 @@ public:
     sf::Vector2i get_pos() const;
     float get_ingame_height() const;
     
-    MapObject(World* _worldptr, const sf::Texture& texture, sf::Vector2i pos, float ingame_height = 2.f);
+    MapObject(World* _worldptr, sf::Vector2i pos, const sf::Texture& texture, float ingame_height = 2.f);
     
     virtual void update(float deltaTime);
 };

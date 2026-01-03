@@ -9,5 +9,5 @@ class Building: public MapObject {
 public:
     NPC* worker;
     
-    Building(World* _worldptr, const sf::Texture& texture, sf::Vector2i pos, float ingame_height = 2.f);
+    Building(World* _worldptr, sf::Vector2i pos, const sf::Texture& texture, float ingame_height = 2.f);
 };

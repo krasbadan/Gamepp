@@ -9,10 +9,10 @@
 
 
 MapResource::MapResource(
-    World* _worldptr, const sf::Texture& texture, sf::Vector2i pos,
+    World* _worldptr, sf::Vector2i pos, const sf::Texture& texture,
     const char* _name, int _amount, float ingame_height
 ):
-    MapObject(_worldptr, texture, pos, ingame_height), name(_name), amount(_amount)
+    MapObject(_worldptr, pos, texture, ingame_height), name(_name), amount(_amount)
 {}
 
 sf::Vector2f MapResource::get_interact_pos() const {

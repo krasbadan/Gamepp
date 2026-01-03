@@ -31,8 +31,8 @@ float MapObject::get_ingame_height() const {
     return ingame_height;
 }
 
-MapObject::MapObject(World* _worldptr, const sf::Texture& texture, sf::Vector2i _pos, float _ingame_height): 
-    worldptr(_worldptr), sprite(texture), pos(_pos), ingame_height(_ingame_height),
+MapObject::MapObject(World* _worldptr, sf::Vector2i _pos, const sf::Texture& texture, float _ingame_height): 
+    worldptr(_worldptr), pos(_pos), sprite(texture), ingame_height(_ingame_height),
     tile(&_worldptr->tiles[_pos.y][_pos.x]) 
 {
     sprite.setOrigin(get_bottom_point() - sf::Vector2f(0.f, texture.getSize().y/ingame_height)*0.75);

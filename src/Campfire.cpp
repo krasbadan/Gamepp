@@ -5,7 +5,7 @@
 
 
 Campfire::Campfire(World* _worldptr, sf::Vector2i pos, float _ingame_height):
-                   Building(_worldptr, Tx["Assets/Sprites/MapObjects/campfire_burning.png"], pos, _ingame_height),
+                   Building(_worldptr, pos, Tx["Assets/Sprites/MapObjects/campfire_burning.png"], _ingame_height),
                    animation_handler(sf::IntRect({0, 0}, {32, 64}))
 {
     Animation burn(0, 7, 0.3f); animation_handler.addAnim(burn);
