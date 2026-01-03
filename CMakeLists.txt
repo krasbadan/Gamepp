@@ -23,7 +23,6 @@ target_sources(main
     "src/Economy.cpp"
     "src/FontManager.cpp"
     "src/Interactable.cpp"
-    "src/InteractableDefinitions.cpp"
     "src/MapObject.cpp"
     "src/MapResource.cpp"    
     "src/NPC.cpp"

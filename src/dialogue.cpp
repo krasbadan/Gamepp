@@ -97,8 +97,8 @@ void Dialogue::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     }
 }
 
-Dialogue::Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
-    interactable(_interactable), n_options(_n_options), active_option(0)
+Dialogue::Dialogue(Interactable* _interactable, const wchar_t* _text, const std::initializer_list<DialogueOption> &list):
+    interactable(_interactable), n_options(list.size()), active_option(0)
 {
     int len = wcslen(_text)+1;
     text = new wchar_t[len];
@@ -107,7 +107,7 @@ Dialogue::Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_opt
     if (n_options == 0) {
         options = nullptr;
     } else {
-        options = new DialogueOption[_n_options];
+        options = new DialogueOption[n_options];
         int i = 0;
         for (DialogueOption x : list) {
             options[i] = x;
@@ -116,13 +116,13 @@ Dialogue::Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_opt
         options[0].is_active = true;
     }
 }
-Dialogue::Dialogue(Interactable* _interactable, wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list):
-    interactable(_interactable), text(_text), n_options(_n_options), active_option(0)
+Dialogue::Dialogue(Interactable* _interactable, wchar_t* _text, const std::initializer_list<DialogueOption> &list):
+    interactable(_interactable), text(_text), n_options(list.size()), active_option(0)
 {
     if (n_options == 0) {
         options = nullptr;
     } else {
-        options = new DialogueOption[_n_options];
+        options = new DialogueOption[n_options];
         int i = 0;
         for (DialogueOption x : list) {
             options[i] = x;
@@ -132,7 +132,11 @@ Dialogue::Dialogue(Interactable* _interactable, wchar_t* _text, int _n_options, 
     }
 }
 Dialogue::~Dialogue() {
-    delete text;
+    delete[] text;
+    
+    for (int i=0; i<n_options; ++i) {
+        delete[] options[i].text;
+    }
     delete[] options;
 }
 

@@ -59,20 +59,26 @@ void Player::update(float deltaTime) {
     if (hp != 0 && fabs(movement.x) < EPS && fabs(movement.y) < EPS) {
         animation_handler.changeAnim(0);
     } else {
+        // Run animation
         if (presenter.check_input_shift()) animation_handler.changeAnim(3);
         else animation_handler.changeAnim(1);
-
+        
         if (movement.x == 0 || movement.y == 0) { movement.x *= 0.707f; movement.y *= 0.707f; }
         
-        float screen_dx = movement.x - movement.y;
+        sf::Vector2f real_movement;
+
+        if      (can_move(getPosition() + movement))                      real_movement = movement;
+        else if (can_move(getPosition() + sf::Vector2f({movement.x, 0}))) real_movement = {movement.x, 0};
+        else if (can_move(getPosition() + sf::Vector2f({0, movement.y}))) real_movement = {0, movement.y};
+        
+        if (fabs(real_movement.x) >= EPS || fabs(real_movement.y) >= EPS)
+            move(real_movement);
+        
+        float screen_dx = real_movement.x - real_movement.y;
         bool was_flipped = is_flipped;
         if (screen_dx < -EPS) is_flipped = true;
         else if (screen_dx > EPS) is_flipped = false;
         if (is_flipped != was_flipped) sprite.scale({-1.f, 1.f});
-
-        if      (can_move(getPosition() + movement))                      move(movement);
-        else if (can_move(getPosition() + sf::Vector2f({movement.x, 0}))) move(sf::Vector2f({movement.x, 0}));
-        else if (can_move(getPosition() + sf::Vector2f({0, movement.y}))) move(sf::Vector2f({0, movement.y}));
     }
 
     if (presenter.check_input_space()) {
@@ -90,7 +96,6 @@ void Player::update(float deltaTime) {
         presenter.active_dialogue = new Dialogue(
             presenter.window_interactable,
             L"Вы собрали весь берёзовый сок в этом мире. Ваша жадность стала вашим концом.",
-            1,
             {
                 DialogueOption(L"...", [this]() -> Dialogue* {
                     worldptr->player_economy->resources["birch_juice"] = -1000;

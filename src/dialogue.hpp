@@ -57,8 +57,8 @@ class Dialogue: public sf::Drawable {
 public:
     Interactable* interactable;
     
-    Dialogue(Interactable* _interactable, const wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list);
-    Dialogue(Interactable* _interactable, wchar_t* _text, int _n_options, const std::initializer_list<DialogueOption> &list);
+    Dialogue(Interactable* _interactable, const wchar_t* _text, const std::initializer_list<DialogueOption> &list);
+    Dialogue(Interactable* _interactable, wchar_t* _text, const std::initializer_list<DialogueOption> &list);
     ~Dialogue();
     
     int get_n_options() const;

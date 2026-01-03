@@ -4,8 +4,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "str_format.hpp"
-
 
 
 const float EPS = 1e-9;

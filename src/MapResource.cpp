@@ -1,10 +1,17 @@
 #include "MapResource.hpp"
 
+#include "dialogue.hpp"
+#include "str_format.hpp"
+
 #include "TextureManager.hpp"
+#include "World.hpp"
 
 
 
-MapResource::MapResource(World* _worldptr, const sf::Texture& texture, sf::Vector2i pos, const char* _name, int _amount, float ingame_height):
+MapResource::MapResource(
+    World* _worldptr, const sf::Texture& texture, sf::Vector2i pos,
+    const char* _name, int _amount, float ingame_height
+):
     MapObject(_worldptr, texture, pos, ingame_height), name(_name), amount(_amount)
 {}
 
@@ -17,6 +24,27 @@ float MapResource::get_interact_distance() const {
 
 
 
-BirchTree::BirchTree(World* _worldptr, sf::Vector2i pos, const char* _name, int _amount, float ingame_height):
-    MapResource(_worldptr, Tx["Assets/Sprites/MapObjects/birch.png"], pos, _name, _amount, ingame_height)
-{}
+Dialogue* MapResource::interact() {
+    if (amount > 0) {
+        return new Dialogue(
+            this,
+            wstr_format(wstr_format(L"Собрать {}? Доступно {}.", name), amount),
+            {
+                DialogueOption(L"Собрать всё", [this]() -> Dialogue* {
+                    worldptr->player_economy->resources[name] += amount;
+                    amount = 0;
+                    return nullptr;
+                }),
+                DialogueOption(L"Отмена", []() -> Dialogue* {
+                    return nullptr;
+                }),
+            }
+        );
+    } else {
+        return new Dialogue(
+            this,
+            L"Все ресурсы добыты.",
+            {}
+        );
+    }
+}

@@ -1,35 +1,33 @@
 #pragma once
 
+#include <cstring>
 #include <stdexcept>
 
 
 
-const int FORMAT_BUFFER_SIZE = 255;
-
-class FormatError: public std::runtime_error {
+class StrFormatError: public std::runtime_error {
 public:
-    FormatError(const char* msg): std::runtime_error(msg) {}
+    StrFormatError(const char* msg): std::runtime_error(msg) {}
 };
 
 
 
-wchar_t* wstr_format(const wchar_t* _format, const wchar_t* arg_str);
-wchar_t* wstr_format(wchar_t* _format, const wchar_t* arg_str);
+wchar_t* wstr_format(const wchar_t* _format, const wchar_t* arg_wstr);
+wchar_t* wstr_format(const wchar_t* _format, wchar_t* arg_wstr);
+wchar_t* wstr_format(wchar_t* _format, const wchar_t* arg_wstr);
+wchar_t* wstr_format(wchar_t* _format, wchar_t* arg_wstr);
 
-wchar_t* wstr_format(const wchar_t* _format, wchar_t* arg_str);
-wchar_t* wstr_format(wchar_t* _format, wchar_t* arg_str);
+wchar_t* wstr_format(const wchar_t* _format, const char* arg_str);
+wchar_t* wstr_format(const wchar_t* _format, const std::string arg);
 
-wchar_t* wstr_format(const wchar_t* _format, int arg);
-wchar_t* wstr_format(wchar_t* _format, int arg);
-
-
-
-/*template<typename T>
-wchar_t* wstr_format(const wchar_t* _format, T arg) {
+template<typename arg_T>
+wchar_t* wstr_format(const wchar_t* _format, arg_T arg) {
     return wstr_format(_format, std::to_wstring(arg).c_str());
 }
 
-template<typename T>
-wchar_t* wstr_format(wchar_t* _format, T arg) {
-    return wstr_format(_format, std::to_wstring(arg).c_str());
-}*/
+template<typename arg_T>
+wchar_t* wstr_format(wchar_t* _format, arg_T arg) {
+    wchar_t* out = wstr_format(const_cast<const wchar_t*>(_format), arg);
+    delete[] _format;
+    return out;
+}

@@ -74,7 +74,6 @@ int main() {
                     presenter.active_dialogue = new Dialogue(
                         window_interactable,
                         L"Выйти из игры?",
-                        2,
                         {
                             DialogueOption(L"Да", [&window]() -> Dialogue* {
                                 window.close();

@@ -1,6 +1,8 @@
 #include "Presenter.hpp"
 
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
+
+#include "str_format.hpp"
 
 #include "Economy.hpp"
 #include "FontManager.hpp"

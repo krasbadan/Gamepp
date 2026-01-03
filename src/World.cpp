@@ -154,16 +154,20 @@ World::World(Interactable* window_interactable, int _width, int _height):
     
     
     
-    spawn_map_resource(new BirchTree(this, {4, road_y + 10}, "birch_juice", 50, 8));
-    spawn_map_resource(new BirchTree(this, {7, road_y + 13}, "birch_juice", 50, 8));
-    spawn_map_resource(new BirchTree(this, {10, road_y + 14}, "birch_juice", 50, 8));
-    spawn_map_resource(new BirchTree(this, {4, road_y + 15}, "birch_juice", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, road_y + 10}, "birch_juice", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {7, road_y + 13}, "birch_juice", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {10, road_y + 14}, "birch_juice", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {4, road_y + 15}, "birch_juice", 50, 8));
     
-    spawn_map_resource(new BirchTree(this, {18, road_y + 15}, "birch_juice", 50, 8));
-    spawn_map_resource(new BirchTree(this, {17, road_y + 15}, "birch_juice", 10, 3));
-    spawn_map_resource(new BirchTree(this, {19, road_y + 15}, "birch_juice", 10, 3));
-    spawn_map_resource(new BirchTree(this, {18, road_y + 16}, "birch_juice", 10, 3));
-    spawn_map_resource(new BirchTree(this, {490, road_y - 16}, "birch_juice", 10, 3));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, road_y + 15}, "birch_juice", 50, 8));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {17, road_y + 15}, "birch_juice", 10, 3));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {19, road_y + 15}, "birch_juice", 10, 3));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {18, road_y + 16}, "birch_juice", 10, 3));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/birch.png"], {490, road_y - 16}, "birch_juice", 10, 3));
+    
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/stones.png"], {5, road_y - 12}, "stone", 20, 1));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/stones.png"], {8, road_y - 10}, "stone", 20, 1));
+    spawn_map_resource(new MapResource(this, Tx["Assets/Sprites/MapObjects/stones.png"], {9, road_y - 14}, "stone", 20, 1));
 
     spawn_building(new Campfire(this, {5, 250}));
     
