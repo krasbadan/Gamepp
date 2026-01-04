@@ -32,7 +32,7 @@ public:
     Economy* player_economy;
     StoryState story;
     
-	World(Interactable* window_interactable, int _width, int _height);
+	World(int _width, int _height);
     ~World();
 	
 	void update(float deltaTime);

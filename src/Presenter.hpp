@@ -5,6 +5,14 @@
 
 
 
+class WindowInteractable: public Interactable {
+    virtual Dialogue* interact() override;
+    virtual sf::Vector2f get_interact_pos() const override;
+    virtual float get_interact_distance() const override;
+};
+
+
+
 const int default_n_E_like_keys = 4;
 const sf::Keyboard::Scancode default_E_like_scancodes[default_n_E_like_keys] = {
     sf::Keyboard::Scancode::E,
@@ -32,7 +40,8 @@ public:
     
     Interactable** available_interactables;
     
-    Presenter(Interactable* window_interactable, Player* _player);
+    Presenter(Player* _player);
+    virtual ~Presenter() override;
     
     bool check_input_move_up();
     bool check_input_move_down();
@@ -42,5 +51,7 @@ public:
     bool check_input_shift();
     
     void update_presentation();
+    
+    void main();
 };
 
