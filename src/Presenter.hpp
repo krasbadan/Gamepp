@@ -41,7 +41,6 @@ public:
     Interactable** available_interactables;
     
     Presenter(Player* _player);
-    virtual ~Presenter() override;
     
     bool check_input_move_up();
     bool check_input_move_down();

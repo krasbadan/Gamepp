@@ -64,9 +64,6 @@ Presenter::Presenter(Player* _player):
     
     window_interactable = new WindowInteractable;
 }
-Presenter::~Presenter() {
-    delete window_interactable;
-}
 
 bool Presenter::check_input_move_up() {
     return sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W);
@@ -237,4 +234,6 @@ void Presenter::main() {
         }
         window.display();
     }
+    
+    delete window_interactable;
 }
