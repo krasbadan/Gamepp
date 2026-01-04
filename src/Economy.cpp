@@ -3,7 +3,7 @@
 #include <cstring>
 
 #include "FontManager.hpp"
-#include "map.hpp"
+#include "Map.hpp"
 #include "str_format.hpp"
 
 

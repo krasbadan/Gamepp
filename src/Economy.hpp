@@ -3,7 +3,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-#include "map.hpp"
+#include "Map.hpp"
 
 
 

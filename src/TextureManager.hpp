@@ -1,6 +1,6 @@
 #pragma once
 
-#include "map.hpp"
+#include "Map.hpp"
 #include <string>
 
 #include "Utils.hpp"
