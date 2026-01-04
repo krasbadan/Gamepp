@@ -17,3 +17,16 @@ public:
     virtual sf::Vector2f get_interact_pos() const override;
     virtual float get_interact_distance() const override;
 };
+
+
+
+class BirchNPC: public MapResource {
+public:
+    BirchNPC(World* _worldptr, sf::Vector2i pos, const sf::Texture& texture, const char* _name, int _amount, float ingame_height = 2.f):
+        MapResource(_worldptr, pos, texture, _name, _amount, ingame_height)
+    {}
+    
+    virtual Dialogue* interact() override;
+    
+    Dialogue* next_dial();
+};
