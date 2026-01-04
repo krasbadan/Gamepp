@@ -50,7 +50,7 @@ public:
     bool check_input_space();
     bool check_input_shift();
     
-    void update_presentation();
+    void update();
     
     void main();
 };

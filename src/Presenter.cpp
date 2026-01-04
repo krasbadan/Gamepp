@@ -87,7 +87,7 @@ bool Presenter::check_input_shift() {
     return sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RShift);
 }
 
-void Presenter::update_presentation() {
+void Presenter::update() {
     for (int ai = 0; ai < n_E_like_keys; ++ai) {
         available_interactables[ai] = nullptr;
     }
@@ -224,7 +224,7 @@ void Presenter::main() {
         player->worldptr->update(deltaTime);
         
         if (window_focus) {
-            update_presentation();
+            update();
             
             window.clear(sf::Color {0, 100, 20});
             
