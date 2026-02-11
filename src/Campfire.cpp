@@ -10,7 +10,7 @@ Campfire::Campfire(World* _worldptr, sf::Vector2i pos, float _ingame_height):
 {
     Animation burn(0, 7, 0.3f); animation_handler.addAnim(burn);
     animation_handler.changeAnim(0);
-    sprite.setTextureRect(animation_handler.bounds);
+    sprite.setTextureRect(animation_handler.get_bounds());
 
     sprite.setOrigin(sf::Vector2f(16, 34));
     float scale = ingame_height/Tx["Assets/Sprites/MapObjects/campfire_burning.png"].getSize().y;
@@ -19,5 +19,5 @@ Campfire::Campfire(World* _worldptr, sf::Vector2i pos, float _ingame_height):
 
 void Campfire::update(float deltaTime) {
     animation_handler.update(deltaTime);
-    sprite.setTextureRect(animation_handler.bounds);
+    sprite.setTextureRect(animation_handler.get_bounds());
 }

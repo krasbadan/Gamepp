@@ -26,6 +26,9 @@ private:
     int currentAnim;
     float anim_duration = 0;
 
+    sf::IntRect bounds;
+    sf::IntRect frameSize;
+
 public:
     float get_anim_duration() {return anim_duration;}
     void addAnim(const Animation& anim);
@@ -34,8 +37,9 @@ public:
     void breakAnim();
     void changeAnim(unsigned animID);
     int count_animations() const;
-    sf::IntRect bounds;
-    sf::IntRect frameSize;
+
+    const sf::IntRect get_bounds() const;
+    const sf::IntRect get_frameSize() const;
 
     AnimationHandler() : t(0), currentAnim(-1) {}
     AnimationHandler(const sf::IntRect& _frameSize) : t(0), currentAnim(-1), frameSize(_frameSize) {}

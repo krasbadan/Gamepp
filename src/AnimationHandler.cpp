@@ -60,3 +60,10 @@ void AnimationHandler::changeAnim(unsigned int animID) {
 int AnimationHandler::count_animations() const {
     return animations.get_size(); // do not miss animations, the scaling would be wrong
 }
+
+const sf::IntRect AnimationHandler::get_bounds() const {
+    return bounds;
+}
+const sf::IntRect AnimationHandler::get_frameSize() const {
+    return frameSize;
+}

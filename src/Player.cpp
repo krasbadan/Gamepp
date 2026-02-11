@@ -29,7 +29,7 @@ Player::Player(
     Animation death(0, 5, 0.15f); animation_handler.addAnim(death);
     Animation dead(0, 1, 1.f); animation_handler.addAnim(dead);
     animation_handler.changeAnim(0);
-    sprite.setTextureRect(animation_handler.bounds);
+    sprite.setTextureRect(animation_handler.get_bounds());
 
     sprite.setOrigin(anim_origin);
     float scale = animation_handler.count_animations()*ingame_height/texture.getSize().y;
@@ -40,7 +40,7 @@ void Player::update(float deltaTime) {
     if (hp == 0) {
         animation_handler.update(deltaTime);
         animation_handler.changeAnim(10);
-        sprite.setTextureRect(animation_handler.bounds);
+        sprite.setTextureRect(animation_handler.get_bounds());
         return;
     }
 
@@ -87,7 +87,7 @@ void Player::update(float deltaTime) {
     }
 
     animation_handler.update(deltaTime);
-    sprite.setTextureRect(animation_handler.bounds);
+    sprite.setTextureRect(animation_handler.get_bounds());
 
     //std::cout << getPosition().x << " " << getPosition().y << std::endl;
     
