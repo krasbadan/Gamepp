@@ -9,7 +9,7 @@
 
 int main() {
     World world(500, 500);
-    world.player.presenter.main();
+    world.get_player().get_presenter().main();
     
     return 0;
 }

@@ -28,8 +28,6 @@ const char* const default_E_like_names[default_n_E_like_keys] = {
 };
 
 class Presenter: public sf::Drawable {
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-public:
     const int n_E_like_keys;
     const sf::Keyboard::Scancode* E_like_scancodes;
     const char* const* const E_like_names;
@@ -39,7 +37,17 @@ public:
     Dialogue* active_dialogue;
     
     Interactable** available_interactables;
-    
+
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+public:
+    Interactable* get_window_interactable() const;
+    Player* get_player() const;
+    Dialogue* get_active_dialogue() const;
+    Interactable* const* get_available_interactables() const;
+
+    void set_active_dialogue(Dialogue* _active_dialogue);
+
     Presenter(Player* _player);
     
     bool check_input_move_up();

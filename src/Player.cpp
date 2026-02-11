@@ -91,21 +91,25 @@ void Player::update(float deltaTime) {
 
     //std::cout << getPosition().x << " " << getPosition().y << std::endl;
     
-    if (worldptr->player_economy->resources["birch_juice"] >= 290 && !worldptr->story.birch_juice_ending) {
-        worldptr->story.birch_juice_ending = true;
-        presenter.active_dialogue = new Dialogue(
-            presenter.window_interactable,
+    if (worldptr->get_player_economy()->resources["birch_juice"] >= 290 && !worldptr->get_story().birch_juice_ending) {
+        worldptr->get_story().birch_juice_ending = true;
+        presenter.set_active_dialogue(new Dialogue(
+            presenter.get_window_interactable(),
             L"Вы собрали весь берёзовый сок в этом мире. Ваша жадность стала вашим концом.",
             {
                 DialogueOption(L"...", [this]() -> Dialogue* {
-                    worldptr->player_economy->resources["birch_juice"] = -1000;
+                    worldptr->get_player_economy()->resources["birch_juice"] = -1000;
                     animation_handler.playAnim(9);
                     hp = 0;
                     return nullptr;
                 }),
             }
-        );
+        ));
     }
 
     return;
+}
+
+Presenter& Player::get_presenter() {
+    return presenter;
 }

@@ -33,7 +33,7 @@ float MapObject::get_ingame_height() const {
 
 MapObject::MapObject(World* _worldptr, sf::Vector2i _pos, const sf::Texture& texture, float _ingame_height): 
     worldptr(_worldptr), pos(_pos), sprite(texture), ingame_height(_ingame_height),
-    tile(&_worldptr->tiles[_pos.y][_pos.x]) 
+    tile(&_worldptr->get_tiles()[_pos.y][_pos.x]) 
 {
     sprite.setOrigin(get_bottom_point() - sf::Vector2f(0.f, texture.getSize().y/ingame_height)*0.75);
 	float scale = ingame_height/texture.getSize().y;
@@ -41,3 +41,7 @@ MapObject::MapObject(World* _worldptr, sf::Vector2i _pos, const sf::Texture& tex
 }
 
 void MapObject::update(float deltaTime) {}
+
+World* MapObject::get_worldptr() const {
+    return worldptr;
+}

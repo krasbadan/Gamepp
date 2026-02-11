@@ -37,9 +37,9 @@ public:
 
 
 class Traveler: public NPC {
-public:
     Time departure_time;
     
+public:
     Traveler(
         World* _worldptr, sf::Vector2f pos,
         const sf::Texture& texture, sf::Vector2i anim_frame_size, sf::Vector2f anim_origin,

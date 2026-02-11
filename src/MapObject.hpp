@@ -16,8 +16,10 @@ protected:
 
     sf::Vector2f get_bottom_point() const;
 
-public:
     World* const worldptr;
+
+public:
+    World* get_worldptr() const;
     
     sf::Vector2f get_central_point() const;
     sf::Vector2i get_pos() const;

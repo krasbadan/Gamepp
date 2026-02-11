@@ -31,3 +31,10 @@ void Interactable::draw(sf::RenderTarget& target, sf::RenderStates states) const
     sf_text.setPosition(draw_pos);
     target.draw(sf_text, states);
 }
+
+const char* Interactable::get_key_name() const {
+    return key_name;
+}
+void Interactable::set_key_name(const char* _key_name) {
+    key_name = _key_name;
+}

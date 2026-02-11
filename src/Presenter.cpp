@@ -39,7 +39,7 @@ void Presenter::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     float margin = 0.02f*std::min(screen_size.x, screen_size.y);
     float font_size = 2.f*margin;
     
-    Time time = player->worldptr->time;
+    Time time = player->get_worldptr()->get_time();
     sf::Text sf_text(Fx["cambria.ttc"], wstr_format(wstr_format(L"{}:{}", time.days), (int)floor(time.seconds)), font_size);
     sf_text.setFillColor({255, 255, 255});
     sf_text.setOutlineColor({0, 0, 0});
@@ -47,7 +47,7 @@ void Presenter::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     sf_text.setPosition({margin, margin});
     target.draw(sf_text, states);
     
-    target.draw(*player->worldptr->player_economy, states);
+    target.draw(*player->get_worldptr()->get_player_economy(), states);
 }
 
 Presenter::Presenter(Player* _player):
@@ -90,22 +90,22 @@ void Presenter::update() {
     }
     
     int ai = 0;
-    for (Interactable* inter : player->worldptr->interactables) {
+    for (Interactable* inter : player->get_worldptr()->get_interactables()) {
         sf::Vector2f iLogicPos = inter->get_interact_pos();
         
         if ((iLogicPos - player->getPosition()).length() <= inter->get_interact_distance()) {
             if (ai < n_E_like_keys) {
-                inter->key_name = E_like_names[ai];
+                inter->set_key_name(E_like_names[ai]);
                 available_interactables[ai++] = inter;
             } else {
-                inter->key_name = nullptr;
+                inter->set_key_name(nullptr);
             }
         }
     }
     
     // Quit active dialogue if distance to interactable is 1.5f times more than interact distance
     if (active_dialogue != nullptr) {
-        Interactable* inter = active_dialogue->interactable;
+        Interactable* inter = active_dialogue->get_interactable();
         if ((player->getPosition() - inter->get_interact_pos()).length() > 1.5f*inter->get_interact_distance()) {
             delete active_dialogue;
             active_dialogue = nullptr;
@@ -218,7 +218,7 @@ void Presenter::main() {
         window.handleEvents(onClosed, onKeyPressed, onFocusLost, onFocusGained, onResized, onMouseWheelScrolled);
         
         float deltaTime = clock.restart().asSeconds();
-        player->worldptr->update(deltaTime);
+        player->get_worldptr()->update(deltaTime);
         
         if (window_focus) {
             update();
@@ -227,7 +227,7 @@ void Presenter::main() {
             
             view.setCenter(World::get_iso_pos(player->getPosition() - sf::Vector2f(1, 1)/1.5));
             window.setView(view);
-            window.draw(*player->worldptr);
+            window.draw(*player->get_worldptr());
             
             window.setView(sf::View(sf::FloatRect({0.f, 0.f}, sf::Vector2f(window.getSize()))));
             window.draw(*this);
@@ -236,4 +236,21 @@ void Presenter::main() {
     }
     
     delete window_interactable;
+}
+
+Interactable* Presenter::get_window_interactable() const {
+    return window_interactable;
+}
+Player* Presenter::get_player() const {
+    return player;
+}
+Dialogue* Presenter::get_active_dialogue() const {
+    return active_dialogue;
+}
+Interactable* const* Presenter::get_available_interactables() const {
+    return available_interactables;
+}
+
+void Presenter::set_active_dialogue(Dialogue* _active_dialogue) {
+    active_dialogue = _active_dialogue;
 }

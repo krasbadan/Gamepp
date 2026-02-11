@@ -170,3 +170,7 @@ std::wostream& operator<<(std::wostream& os, const Dialogue& self) {
     }
     return os;
 }
+
+Interactable* Dialogue::get_interactable() const {
+    return interactable;
+}

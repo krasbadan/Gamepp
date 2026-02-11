@@ -10,9 +10,12 @@
 
 class Player : public Character {
     float speed = 6.0f;
-public:
+
     Presenter presenter;
-    
+
+public:
+    Presenter& get_presenter();
+
     Player(World* _worldptr, sf::Vector2f pos,
            const sf::Texture& texture = Tx["Assets/Sprites/KingAnimated/FullAnimation.png"],
            sf::Vector2i anim_frame_size = {160, 111}, sf::Vector2f anim_origin = {85.f, 105.f},

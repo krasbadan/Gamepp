@@ -7,8 +7,11 @@
 
 
 class Interactable: public sf::Drawable {
-public:
     const char* key_name = nullptr;
+
+public:
+    const char* get_key_name() const;
+    void set_key_name(const char* _key_name);
     
     virtual Dialogue* interact() = 0;
     

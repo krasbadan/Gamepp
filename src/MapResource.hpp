@@ -7,9 +7,15 @@
 
 
 class MapResource: public MapObject, public Interactable {
-public:
+protected:
     const char* name;
     int amount;
+
+public:
+    const char* get_name() const;
+    int get_amount() const;
+    void set_name(const char* _name);
+    void set_amount(int _amount);
     
     MapResource(World* _worldptr, sf::Vector2i pos, const sf::Texture& texture, const char* _name, int _amount, float ingame_height = 2.f);
     

@@ -35,7 +35,11 @@ Character::Character(
 
 bool Character::can_move(sf::Vector2f vec) {
     sf::Vector2i newpos = floor(vec);
-    return (0 <= newpos.y && worldptr->height > newpos.y &&
-            0 <= newpos.x && worldptr->width  > newpos.x &&
-            worldptr->tiles[newpos.y][newpos.x].is_passable);
+    return (0 <= newpos.y && worldptr->get_height() > newpos.y &&
+            0 <= newpos.x && worldptr->get_width()  > newpos.x &&
+            worldptr->get_tiles()[newpos.y][newpos.x].is_passable);
+}
+
+World* Character::get_worldptr() const {
+    return worldptr;
 }

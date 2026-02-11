@@ -24,7 +24,7 @@ Dialogue* MapResource::interact() {
             wstr_format(wstr_format(L"Собрать {}? Доступно {}.", name), amount),
             {
                 DialogueOption(L"Собрать всё", [this]() -> Dialogue* {
-                    worldptr->player_economy->resources[name] += amount;
+                    worldptr->get_player_economy()->resources[name] += amount;
                     amount = 0;
                     return nullptr;
                 }),
@@ -61,12 +61,12 @@ Dialogue* BirchNPC::interact() {
                     return nullptr;
                 }),
                 DialogueOption(L"Можно чуть-чуть попробовать? (1 литр)", [this]() -> Dialogue* {
-                    worldptr->player_economy->resources["birch_juice"] += 1;
+                    worldptr->get_player_economy()->resources["birch_juice"] += 1;
                     amount -= 1;
                     return next_dial();
                 }),
                 DialogueOption(L"Я возьму всё!", [this]() -> Dialogue* {
-                    worldptr->player_economy->resources["birch_juice"] += amount;
+                    worldptr->get_player_economy()->resources["birch_juice"] += amount;
                     amount = 0;
                     return nullptr;
                 }),
@@ -91,12 +91,12 @@ Dialogue* BirchNPC::next_dial() {
                     return nullptr;
                 }),
                 DialogueOption(L"Можно ещё чуть-чуть? (1 литр)", [this]() -> Dialogue* {
-                    worldptr->player_economy->resources["birch_juice"] += 1;
+                    worldptr->get_player_economy()->resources["birch_juice"] += 1;
                     amount -= 1;
                     return next_dial();
                 }),
                 DialogueOption(L"Я возьму всё!", [this]() -> Dialogue* {
-                    worldptr->player_economy->resources["birch_juice"] += amount;
+                    worldptr->get_player_economy()->resources["birch_juice"] += amount;
                     amount = 0;
                     return nullptr;
                 }),
@@ -109,4 +109,17 @@ Dialogue* BirchNPC::next_dial() {
             {}
         );
     }
+}
+
+const char* MapResource::get_name() const {
+    return name;
+}
+int MapResource::get_amount() const {
+    return amount;
+}
+void MapResource::set_name(const char* _name) {
+    name = _name;
+}
+void MapResource::set_amount(int _amount) {
+    amount = _amount;
 }

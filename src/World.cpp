@@ -222,3 +222,34 @@ void World::spawn_npc(NPC* npc) {
     npcs.push_back(npc);
     interactables.push_back(npc);
 }
+
+Player& World::get_player() {
+    return player;
+}
+int World::get_width() const {
+    return width;
+}
+int World::get_height() const {
+    return height;
+}
+Tile* const* World::get_tiles() const {
+    return tiles;
+}
+Sequence<MapObject*>& World::get_map_objects() {
+    return map_objects;
+}
+Sequence<NPC*>& World::get_npcs() {
+    return npcs;
+}
+Sequence<Interactable*>& World::get_interactables() {
+    return interactables;
+}
+Time World::get_time() const {
+    return time;
+}
+Economy* World::get_player_economy() const {
+    return player_economy;
+}
+StoryState& World::get_story() {
+    return story;
+}
