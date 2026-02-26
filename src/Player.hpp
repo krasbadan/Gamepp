@@ -9,8 +9,6 @@
 
 
 class Player : public Character {
-    float speed = 6.0f;
-
     Presenter presenter;
 
 public:

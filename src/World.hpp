@@ -16,7 +16,7 @@ struct StoryState {
 };
 
 class World: public sf::Drawable {
-	static const int road_width = 8;
+	static const int road_width;
     
     virtual void draw(sf::RenderTarget& target, [[maybe_unused]] sf::RenderStates states) const override;
 
@@ -53,3 +53,5 @@ public:
     void spawn_map_resource(MapResource* map_resource);
     void spawn_npc(NPC* npc);
 };
+
+inline const int World::road_width = 8;

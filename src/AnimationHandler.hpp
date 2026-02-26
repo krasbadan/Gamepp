@@ -24,7 +24,7 @@ private:
     Sequence<Animation> animations;
     float t;
     int currentAnim;
-    float anim_duration = 0;
+    float anim_duration;
 
     sf::IntRect bounds;
     sf::IntRect frameSize;
@@ -41,6 +41,6 @@ public:
     const sf::IntRect get_bounds() const;
     const sf::IntRect get_frameSize() const;
 
-    AnimationHandler() : t(0), currentAnim(-1) {}
-    AnimationHandler(const sf::IntRect& _frameSize) : t(0), currentAnim(-1), frameSize(_frameSize) {}
+    AnimationHandler() : t(0), currentAnim(-1), anim_duration(0.f) {}
+    AnimationHandler(const sf::IntRect& _frameSize) : t(0), currentAnim(-1), frameSize(_frameSize), anim_duration(0.f) {}
 };

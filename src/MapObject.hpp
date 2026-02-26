@@ -9,7 +9,7 @@ protected:
     Tile* tile;
     sf::Vector2i pos;
     sf::Sprite sprite;
-    float ingame_height = 3.f;
+    float ingame_height;
     
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

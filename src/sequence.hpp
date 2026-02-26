@@ -50,10 +50,12 @@ public:
     }
 };
 
+
+
+const int min_arr_size = 4;
+
 template<typename T>
 class Sequence {
-    static const int min_arr_size = 4;
-    
     int size;
     int arr_size;
     T* arr;

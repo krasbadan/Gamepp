@@ -24,11 +24,12 @@ sf::Vector2f Character::get_central_point() const {
 Character::Character(
     World* _worldptr, sf::Vector2f pos,
     const sf::Texture& texture, sf::Vector2i anim_frame_size, sf::Vector2f anim_origin,
-    float _ingame_height, int _hp_max
+    float _ingame_height, int _hp_max, float _speed
 ):
     worldptr(_worldptr),
     sprite(texture), animation_handler(sf::IntRect({0, 0}, anim_frame_size)),
-    ingame_height(_ingame_height), hp_max(_hp_max), hp(_hp_max)
+    ingame_height(_ingame_height), hp_max(_hp_max), hp(_hp_max), speed(_speed),
+    is_flipped(0)
 {
     setPosition(pos);
 }

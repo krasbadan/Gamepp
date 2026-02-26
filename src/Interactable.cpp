@@ -4,6 +4,10 @@
 
 
 
+Interactable::Interactable():
+    key_name(nullptr)
+{}
+
 void Interactable::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     if (key_name == nullptr)
         return;

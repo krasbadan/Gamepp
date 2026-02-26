@@ -8,7 +8,6 @@
 
 
 class NPC : public Character, public Interactable {
-    float speed = 4.0f;
 public:
     NPC(
         World* _worldptr, sf::Vector2f pos,
