@@ -82,14 +82,18 @@ public:
 
     iterator find(const Key& key) const {
         Node* curr = root;
-        while (curr != nullptr) {
+        bool found = false;
+        while (curr != nullptr && !found) {
             if (key == curr->kv.first) {
-                return iterator(curr);
+                found = true;
             } else if (key < curr->kv.first) {
                 curr = curr->left;
             } else {
                 curr = curr->right;
             }
+        }
+        if (found) {
+            return iterator(curr);
         }
         return end();
     }
@@ -97,11 +101,19 @@ public:
     Value& operator[](const Key& key) {
         Node* curr = root;
         Node* parent = nullptr;
-        while (curr != nullptr) {
-            if (key == curr->kv.first) return curr->kv.second;
-            parent = curr;
-            if (key < curr->kv.first) curr = curr->left;
-            else curr = curr->right;
+        bool found = false;
+        while (curr != nullptr && !found) {
+            if (key == curr->kv.first) {
+                found = true;
+            } else {
+                parent = curr;
+                if (key < curr->kv.first) curr = curr->left;
+                else curr = curr->right;
+            }
+        }
+
+        if (found) {
+            return curr->kv.second;
         }
 
         Node* newNode = new Node(key, Value{});
@@ -144,8 +156,9 @@ private:
         x->parent = y;
     }
 
-    void FixInsert(Node* k) {
-        while (k->parent && k->parent->red) {
+void FixInsert(Node* k) {
+        bool done = false;
+        while (k->parent && k->parent->red && !done) {
             if (k->parent == k->parent->parent->right) {
                 Node* u = k->parent->parent->left; // Uncle
                 if (u && u->red) {
@@ -179,7 +192,7 @@ private:
                     rightRotation(k->parent->parent);
                 }
             }
-            if (k == root) break;
+            if (k == root) done = true;
         }
         root->red = false;
     }
